@@ -7,7 +7,7 @@ const path = require('path')
 
 const cors = require('cors')
 app.use(cors({
-    origin: '*',
+    origin: ['http://localhost:5173', 'http://localhost:3000','https://cyber-ai-eta.vercel.app'],
     credentials: true,
 }))
     // credentials: true, // cookeis se kam kar sakt data read karna bhejtna rakan matlab cookis ke saath kam kar sak hto 
