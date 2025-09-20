@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import { Chatfetch, Messagesfetch } from "../store/actions/chataction.jsx";
 import {authenticateUser} from "../store/actions/useraction.jsx"
-import  { API_URL } from "../api/axios.jsx";
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Home = () => {
   const [desktop,setdesktop ] = useState(window.innerWidth >= 768); // Example: true if width >= 768px 1089>768 1089 sppose laptop
@@ -17,10 +15,10 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   console.log(userDetails)
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
-  const socketInstance = io(API_URL, {
+  const socketInstance = io('https://cyber-ai-a71i.onrender.com', {
     withCredentials: true,
   });
-  const [loading,setLoading ] = useState(true)
+  const [loading,setLoading ] =useState(true)
   console.log("Selected Chat ID:", selectedChatId);
   useEffect(() => {
   const init = async () => {
