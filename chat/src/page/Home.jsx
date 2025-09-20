@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import { Chatfetch, Messagesfetch } from "../store/actions/chataction.jsx";
 import {authenticateUser} from "../store/actions/useraction.jsx"
-
+import  { API_URL } from "../api/axios.jsx";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   console.log(userDetails)
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
-  const socketInstance = io(BASE_URL, {
+  const socketInstance = io(API_URL, {
     withCredentials: true,
   });
   const [loading,setLoading ] = useState(true)
