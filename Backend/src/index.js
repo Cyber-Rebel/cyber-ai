@@ -7,9 +7,9 @@ const path = require('path')
 
 const cors = require('cors')
 app.use(cors({
-      origin:'http://localhost:5173',
-       credentials: true,
-    }))
+    origin: '*',
+    credentials: true,
+}))
     // credentials: true, // cookeis se kam kar sakt data read karna bhejtna rakan matlab cookis ke saath kam kar sak hto 
 
 const cookieparser = require('cookie-parser')
