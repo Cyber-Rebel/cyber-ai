@@ -27,13 +27,13 @@ const cors = require('cors')
 //   next();
 // });
 
+const cookieparser = require('cookie-parser')
 app.use(cors({
-    origin: 'https://cyber-ai-eta.vercel.app'
+    origin: 'https://cyber-ai-eta.vercel.app',
     credentials: true,
 }))
     // credentials: true, // cookeis se kam kar sakt data read karna bhejtna rakan matlab cookis ke saath kam kar sak hto 
 
-const cookieparser = require('cookie-parser')
 
 app.use(express.json())
 app.use(cookieparser())
