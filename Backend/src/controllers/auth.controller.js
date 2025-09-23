@@ -18,7 +18,11 @@ if(!isPasswordValid){
 
 const token = jwt.sign({id:UserAlerdyexits.id},process.env.JWT_SECRET)
 
-res.cookie('token',token)// set as on cookie
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,        // must be true for https (vercel + render are https)
+  sameSite: "none"     // allow cross-site cookies
+}) // set as on cookie
 res.status(200).json({
   message:"Sucessfully Login "
   ,    user:{
@@ -66,7 +70,12 @@ console.log(avatarsUrl)
 
   const token = jwt.sign({id:user._id},process.env.JWT_SECRET)// jar object pass kela tar token madeh ek obje yeto kya madhe ek madhe apla data and secondt iat kuch hota hae 
 
-    res.cookie('token',token)
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,        // must be true for https (vercel + render are https)
+  sameSite: "none"     // allow cross-site cookies
+});
+    
   res.status(201).json({
     message:"user create succesfully !",
     user:{
