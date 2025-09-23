@@ -6,10 +6,26 @@ const ChatRouter = require('./routes/chat.routes.js')
 const path = require('path')
 
 const cors = require('cors')
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://cyber-ai-eta.vercel.app"
+];
+
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000','https://cyber-ai-eta.vercel.app'],
-    credentials: true,
-}))
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
+// app.use(cors({
+//     origin: ['http://localhost:5173', 'http://localhost:3000','https://cyber-ai-eta.vercel.app'],
+//     credentials: true,
+// }))
     // credentials: true, // cookeis se kam kar sakt data read karna bhejtna rakan matlab cookis ke saath kam kar sak hto 
 
 const cookieparser = require('cookie-parser')
