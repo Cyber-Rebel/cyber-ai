@@ -73,7 +73,9 @@ console.log(avatarsUrl)
     res.cookie("token", token, {
   httpOnly: true,
   secure: true,        // must be true for https (vercel + render are https)
-  sameSite: "none"     // allow cross-site cookies
+  sameSite: "none"  ,   // allow cross-site cookies
+        domain: ".vercel.app",
+         path: "/",
 });
     
   res.status(201).json({
