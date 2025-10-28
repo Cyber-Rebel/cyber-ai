@@ -26,17 +26,9 @@ const ChatItem = ({ chat, selectedChatId, onChatSelect, onDelete, truncateTitle 
         </div>
         
         {/* Action Buttons */}
-        <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              // Add edit functionality
-            }}
-            className="p-1 hover:bg-[#3d3d3d] rounded transition-colors duration-200"
-            title="Rename chat"
-          >
-            <FiEdit3 size={12} className="text-gray-400" />
-          </button>
+        <div className="flex items-center transition-opacity duration-200">
+          
+          
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -45,7 +37,7 @@ const ChatItem = ({ chat, selectedChatId, onChatSelect, onDelete, truncateTitle 
             className="p-1 hover:bg-[#3d3d3d] rounded transition-colors duration-200 ml-1"
             title="Delete chat"
           >
-            <FiTrash2 size={12} className="text-gray-400" />
+            <FiTrash2 size={12} className="text-red-300" />
           </button>
         </div>
       </div>

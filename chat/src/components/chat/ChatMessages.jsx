@@ -4,7 +4,6 @@ import { createNewchats } from "../../store/actions/chataction.jsx";
 import { addNewMessage } from "../../store/Slicees/chatSlice";
 import { HiSparkles, HiLightningBolt } from "react-icons/hi";
 import { FiCpu } from "react-icons/fi";
-
 // Import the broken down components
 import ChatHeader from "./ChatHeader.jsx";
 import EmptyChat from "./EmptyChat.jsx";
@@ -28,6 +27,8 @@ export default function ChatMessages({
   const [openModelPopup, setOpenModelPopup] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [whichInput , setWhichInput] = useState('text');
+
 
   // Redux
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ export default function ChatMessages({
     { id: 'gemini', name: 'Gemini Pro', icon: <HiSparkles />, color: 'bg-blue-500' },
     { id: 'gpt-4', name: 'GPT-4', icon: <HiLightningBolt />, color: 'bg-green-500' },
     { id: 'claude', name: 'Claude', icon: <FiCpu />, color: 'bg-purple-500' },
+    
   ];
 
   // Event handlers
@@ -62,6 +64,7 @@ export default function ChatMessages({
     socket.emit("ai-message", {
       chat: chatId,
       content: input,
+      whichInput: whichInput,
       model: selectedModel,
     });
     dispatch(
@@ -69,6 +72,7 @@ export default function ChatMessages({
         _id: Date.now().toString(),
         content: input,
         chat: chatId,
+        imageUrl: null,
         role: "user",
       })
     );
@@ -84,6 +88,9 @@ export default function ChatMessages({
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+// ---- set here text input as default
+setWhichInput('text');
+
     }
   };
 
@@ -96,6 +103,7 @@ export default function ChatMessages({
           _id: Date.now().toString(),
           content: data.content,
           chat: chatId,
+          imageUrl: data?.imageUrl,
           role: "model",
         })
       );
@@ -134,6 +142,8 @@ export default function ChatMessages({
           />
           
           <ChatInput 
+            whichInput={whichInput}
+            setWhichInput={setWhichInput} 
             input={input}
             setInput={setInput}
             onSend={handleSend}

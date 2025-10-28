@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const UserModels = require("../Models/user.models.js");
 const Message = require("../Models/message.model.js");
 const { geminiresponce,generatevector } = require("../services/ai.services.js");
+const ImageGenerate = require('../services/Imagegererate.js');
 const {createMemory,queryMemory} = require('../services/vector.services.js');
 
 const socketserver = (httpserver) => {
@@ -53,14 +54,43 @@ credentials: true
     //   console.log(F)
     //   })
 
-
-
-
-
-
     socket.on("ai-message", async (messagepayload) => {
       //p1
-      console.log(messagepayload)
+      // console.log(messagepayload.whichInput)
+      if(messagepayload.whichInput==='image'){
+const data =  await ImageGenerate(messagepayload.content)
+
+          
+ Message.create({
+   chat: messagepayload.chat,
+   content: messagepayload.content,
+   user: socket.user._id,
+   role: "user",
+      })
+
+
+    const response =  await  Message.create({
+  chat: messagepayload.chat,
+  content: "Image generated successfully",
+  user: socket.user._id,
+   imageUrl:data,
+  role: "model",
+  
+})
+console.log("Generated image url:",response)
+
+socket.emit("ai-repsonces", { // np103177@gmail.com
+        content: response.content,
+        imageUrl:response.imageUrl,
+        chat: messagepayload.chat,
+      })
+
+
+      }
+      
+else{
+
+
 
 const [ messagereponse ,vector]= await Promise.all([
  Message.create({
@@ -171,7 +201,12 @@ generatevector(repsonces)
     }
 
 ;
-    });
+  }
+
+
+
+
+});
   });
 };
 

@@ -22,6 +22,9 @@ const messageSchema  = new mongoose.Schema({
         
     //enum ek role set karnata hae role ki jo value hae wo user or model hi ho sakti hae 
     default: 'user',    // default me value user set hagi 
+  },
+  imageUrl:{ // ye optional hoga agar message me image hoga to ye property use hogi 
+    type: String,
   }
 
 },{

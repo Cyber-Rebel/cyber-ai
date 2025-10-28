@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/8b59dd59-6679-4b67-96ca-c0b9375a5941/resourceGroups/cyber-ai-backend/providers/Microsoft.Web/sites/cyber-ai-backend",
+    "appService.deploySubpath": "Backend"
+}

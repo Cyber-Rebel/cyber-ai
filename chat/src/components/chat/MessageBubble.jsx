@@ -24,7 +24,13 @@ const MessageBubble = ({ message }) => {
           {message.role === 'user' ? (
             <p className="whitespace-pre-wrap">{message.content}</p>
           ) : (
-            <ReactMarkdown 
+
+
+
+message.imageUrl ? (        <div>    <img src={message.imageUrl} alt="Generated" className="rounded-lg max-w-full h-auto" /> 
+  <p className="mt-2 whitespace-pre-wrap ">{message.content} 🗿</p></div>
+
+  ) : (<ReactMarkdown 
               remarkPlugins={[remarkGfm]}
               components={{
                 code({ node, inline, className, children, ...props }) {
@@ -48,7 +54,14 @@ const MessageBubble = ({ message }) => {
               }}
             >
               {message.content}
-            </ReactMarkdown>
+            </ReactMarkdown>)
+          
+          
+          
+          
+          
+          
+          
           )}
         </div>
       </div>
