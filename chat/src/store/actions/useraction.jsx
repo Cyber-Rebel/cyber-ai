@@ -5,7 +5,7 @@ import { setUser, clearUser } from '../Slicees/userSlice.jsx'
 
 export const loginUser = (data) => async (dispatch) => {
   try {
-  const response = await axios.post(`http://localhost:3000/api/auth/login`, data,{withCredentials:true})
+  const response = await axios.post(`https://cyber-ai-a71i.onrender.com/api/auth/login`, data,{withCredentials:true})
     // console.log("the line 7n",response.data.user)
     const userData = response.data.user
     dispatch(setUser({
@@ -26,7 +26,7 @@ export const loginUser = (data) => async (dispatch) => {
 
 export const registerUser = (data)=> async (dispatch)=>{
   try{
-  const reponser= await axios.post(`http://localhost:3000/api/auth/register`,data,{withCredentials:true})
+  const reponser= await axios.post(`https://cyber-ai-a71i.onrender.com/api/auth/register`,data,{withCredentials:true})
     // console.log("the line 34",reponser.data)
     const userData = reponser.data.user
     dispatch(setUser({
@@ -50,7 +50,7 @@ export const registerUser = (data)=> async (dispatch)=>{
 }
 export const  authenticateUser = () => async (dispatch) => {
   try{
-  const response = await axios.get(`http://localhost:3000/api/auth/me`,{withCredentials:true})
+  const response = await axios.get(`https://cyber-ai-a71i.onrender.com/api/auth/me`,{withCredentials:true})
     console.log("the line 60",response.data)
     const userData = response.data.user
     console.log("the line 62",userData)
@@ -73,7 +73,7 @@ export const  authenticateUser = () => async (dispatch) => {
 
 export const logoutUser = () => async (dispatch) => {
   try{
-    const response = await axios.get(`http://localhost:3000/api/auth/logout`, {withCredentials:true})
+    const response = await axios.get(`https://cyber-ai-a71i.onrender.com/api/auth/logout`, {withCredentials:true})
     console.log("the line 87",response.data)
     dispatch(clearUser())
     return response.data.message // Return user data for further use
