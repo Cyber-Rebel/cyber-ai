@@ -13,8 +13,7 @@ RUN npm install
 # Copy application code
 COPY . .
 
-# Change ownership of the app directory
-RUN chown -R nodejs:nodejs /app
+
 
 # Switch to non-root user
 USER nodejs

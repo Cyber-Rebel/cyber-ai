@@ -10,7 +10,7 @@ const {createMemory,queryMemory} = require('../services/vector.services.js');
 const socketserver = (httpserver) => {
   const io = new Server(httpserver, {
     cors:{
-    origin:"http://localhost:5174",
+    origin:"https://cyber-ai-a71i.onrender.com",
      allowedHeaders: [ "Content-Type", "Authorization" ], 
 credentials: true
 
