@@ -1,15 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble.jsx';
 import TypingIndicator from './TypingIndicator.jsx';
-
 const MessagesContainer = ({ messages, loading, messagesContainerRef, messagesEndRef }) => {
+ 
   useEffect(() => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
   }, [messages, loading]);
 
-
+console.log(messages)
   return (
     <div 
       ref={messagesContainerRef}
@@ -18,8 +18,9 @@ const MessagesContainer = ({ messages, loading, messagesContainerRef, messagesEn
       <div className="max-w-4xl mx-auto space-y-6">
         {messages && messages.map((message) => {
           console.log("Rendering message:", message);
-          return (  
-            <MessageBubble key={message._id} message={message} />
+          return (  <>
+          <MessageBubble key={message._id} message={message} />
+          </>
           );
         })}
 

@@ -19,13 +19,12 @@ return (
 
     
        <Routes>
-      {/* If logged in → Home, else → Login */}
+    
       <Route path="/" element={id ? <Home /> : <Navigate to="/login" />} />
 
-      {/* If not logged in → Login, else → Home */}
       <Route path="/login" element={!id ? <Login /> : <Navigate to="/" />} />
 
-      {/* If not logged in → Register, else → Home */}
+
       <Route path="/register" element={!id ? <Register /> : <Navigate to="/" />} />
     </Routes>
 

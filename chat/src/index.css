@@ -157,6 +157,95 @@ body {
   scrollbar-color: var(--cyber-blue) var(--dark-bg);
 }
 
+/* Enhanced Chat Input Animations */
+@keyframes slide-in-from-bottom-2 {
+  0% { 
+    opacity: 0; 
+    transform: translateY(8px) scale(0.95); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+.animate-in {
+  animation-duration: 0.2s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+
+.slide-in-from-bottom-2 {
+  animation-name: slide-in-from-bottom-2;
+}
+
+/* Custom Input Scrollbar */
+.custom-input-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-input-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-input-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.3);
+  border-radius: 2px;
+}
+
+.custom-input-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.5);
+}
+
+/* Enhanced Backdrop Blur for Better Glass Effect */
+@supports (backdrop-filter: blur(16px)) {
+  .backdrop-blur-xl {
+    backdrop-filter: blur(16px) saturate(180%);
+  }
+}
+
+/* Custom Animation Delays for Bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* Gradient Border Effect */
+.gradient-border {
+  position: relative;
+  background: linear-gradient(var(--angle), var(--cyber-blue), var(--cyber-purple), var(--cyber-green));
+  border-radius: inherit;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--dark-bg);
+  border-radius: inherit;
+}
+
+/* Hover Effects */
+.hover-lift {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Focus Ring Enhancement */
+.focus-ring-enhanced:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1), 0 0 20px rgba(34, 211, 238, 0.1);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .cyber-button {

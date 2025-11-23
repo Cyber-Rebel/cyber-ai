@@ -15,7 +15,7 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   console.log(userDetails)
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
-  const socketInstance = io('https://cyber-ai-a71i.onrender.com', {
+  const socketInstance = io('http://localhost:3000', {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)

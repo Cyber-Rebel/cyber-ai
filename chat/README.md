@@ -97,7 +97,7 @@ export default chatSlice.reducer;
 
 ```js
 // When connecting socket
-const socket = io('https://cyber-ai-a71i.onrender.com', {
+const socket = io('http://localhost:3000', {
   auth: { token: localStorage.getItem('token') },
   withCredentials: true,
 });

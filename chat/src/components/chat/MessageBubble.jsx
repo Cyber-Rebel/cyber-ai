@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useSpeechSynthesis } from 'react-speech-kit'
+import { Volume2, Square } from 'lucide-react'
 
 const MessageBubble = ({ message }) => {
+  const { speak, cancel, speaking } = useSpeechSynthesis();
+
+ 
   return (
     <div className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
       {message.role !== 'user' && (
@@ -30,19 +35,20 @@ const MessageBubble = ({ message }) => {
 message.imageUrl ? (        <div>    <img src={message.imageUrl} alt="Generated" className="rounded-lg max-w-full h-auto" /> 
   <p className="mt-2 whitespace-pre-wrap ">{message.content} 🗿</p></div>
 
-  ) : (<ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '');
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      style={dracula}
-                      language={match[1]}
-                      PreTag="div"
-                      className="rounded-lg my-2"
-                      {...props}
-                    >
+) : (<>
+<ReactMarkdown 
+  remarkPlugins={[remarkGfm]}
+  components={{
+    code({ node, inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || '');
+      return !inline && match ? (
+        <SyntaxHighlighter
+        style={dracula}
+        language={match[1]}
+        PreTag="div"
+        className="rounded-lg my-2"
+        {...props}
+        >
                       {String(children).replace(/\n$/, '')}
                     </SyntaxHighlighter>
                   ) : (
@@ -52,16 +58,36 @@ message.imageUrl ? (        <div>    <img src={message.imageUrl} alt="Generated"
                   );
                 },
               }}
-            >
+              >
               {message.content}
-            </ReactMarkdown>)
+            </ReactMarkdown>
+            
+            {/* GPT-style icon buttons for speak/stop */}
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={() => speak({ text: message.content })}
+                disabled={speaking}
+                aria-label="Read aloud"
+                className="p-2 rounded-md hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                title={speaking ? 'Speaking...' : 'Read aloud'}
+              >
+                <Volume2 size={18} strokeWidth={1.5} />
+              </button>
+              
+              {speaking && (
+                <button
+                  onClick={() => cancel()}
+                  aria-label="Stop reading"
+                  className="p-2 rounded-md hover:bg-red-900/30 text-red-400 hover:text-red-300 transition-colors duration-200"
+                  title="Stop reading"
+                >
+                  <Square size={18} strokeWidth={1.5} fill="currentColor" />
+                </button>
+              )}
+            </div>
+          </>
           
-          
-          
-          
-          
-          
-          
+            )       
           )}
         </div>
       </div>

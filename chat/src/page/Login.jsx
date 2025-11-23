@@ -22,7 +22,7 @@ const Login = () => {
         password: password
       })) 
       console.log('iscorrectrepo',iscorrectrepo) // shwow undefind because jab user correct hae tab koi repose send huava 
-      if(iscorrectrepo.error){
+      if(iscorrectrepo.error){ // alert response.data
         alert('Invalid email or password')
         return 
       }
