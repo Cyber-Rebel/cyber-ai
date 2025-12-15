@@ -2,6 +2,7 @@ import {  Routes, Route, useNavigate,Navigate} from 'react-router-dom';
 import Login from './page/Login.jsx';
 import Home from './page/Home.jsx';
 import Register from './page/Register.jsx';
+import LandingPage from './page/LandingPage.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -20,12 +21,16 @@ return (
     
        <Routes>
     
-      <Route path="/" element={id ? <Home /> : <Navigate to="/login" />} />
+      {/* Landing Page - Always accessible */}
+      <Route path="/" element={<LandingPage />} />
+      
+      {/* Chat - Protected Route */}
+      <Route path="/chat" element={id ? <Home /> : <Navigate to="/login" />} />
 
-      <Route path="/login" element={!id ? <Login /> : <Navigate to="/" />} />
+      <Route path="/login" element={!id ? <Login /> : <Navigate to="/chat" />} />
 
 
-      <Route path="/register" element={!id ? <Register /> : <Navigate to="/" />} />
+      <Route path="/register" element={!id ? <Register /> : <Navigate to="/chat" />} />
     </Routes>
 
 );

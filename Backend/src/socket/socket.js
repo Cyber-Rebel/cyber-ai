@@ -8,12 +8,18 @@ const ImageGenerate = require('../services/Imagegererate.js');
 const {createMemory,queryMemory} = require('../services/vector.services.js');
 
 const socketserver = (httpserver) => {
+  // Get frontend URLs from environment variables
+  const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.FRONTEND_URL_ALT,
+    process.env.PRODUCTION_URL
+  ].filter(Boolean);
+
   const io = new Server(httpserver, {
     cors:{
-    origin:"https://cyber-ai-a71i.onrender.com",
-     allowedHeaders: [ "Content-Type", "Authorization" ], 
-credentials: true
-
+      origin: allowedOrigins,
+      allowedHeaders: [ "Content-Type", "Authorization" ], 
+      credentials: true
     }
   });
   

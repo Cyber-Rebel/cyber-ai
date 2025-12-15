@@ -9,6 +9,13 @@ const httpserver = createServer(app)
 socketserver(httpserver)
 
 
-httpserver.listen(3000,()=>{
-console.log('server listen on port 3000')
-})
+const PORT = process.env.PORT;
+
+if (!PORT) {
+  console.error('ERROR: PORT environment variable is not set!');
+  process.exit(1);
+}
+
+httpserver.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

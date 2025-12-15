@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { loginUser } from '../store/actions/useraction'
 import { useDispatch } from 'react-redux'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -16,40 +17,65 @@ const Login = () => {
     e.preventDefault()
     setLoading(true)
 
+    const loadingToast = toast.loading('Signing in...')
+
     try{
       const iscorrectrepo= await  dispatch(loginUser({ 
         email: email,
         password: password
       })) 
-      console.log('iscorrectrepo',iscorrectrepo) // shwow undefind because jab user correct hae tab koi repose send huava 
-      if(iscorrectrepo.error){ // alert response.data
-        alert('Invalid email or password')
+      
+      if(iscorrectrepo.error){
+        toast.error('Invalid email or password', { id: loadingToast })
         return 
       }
+      toast.success('Login successful!', { id: loadingToast })
       navigate('/')
     }catch(err){
       console.log(err)
-      alert(err);
+      toast.error('Login failed. Please try again.', { id: loadingToast })
     } finally {
       setLoading(false)
     }
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white text-black  to-indigo-50 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-[#212121] text-white flex items-center justify-center px-4 py-8">
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: '#2d2d2d',
+            color: '#fff',
+            border: '1px solid #404040',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to continue your AI conversations</p>
+          <h1 className="text-4xl font-medium tracking-tight mb-2">Welcome Back</h1>
+          <p className="text-gray-400">Sign in to continue your AI conversations</p>
         </div>
 
         {/* Main Card */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+        <div className="bg-[#171717] rounded-2xl border border-[#2d2d2d] p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email Address
               </label>
               <input
@@ -58,14 +84,14 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-300"
+                className="w-full px-4 py-3 bg-[#212121] border border-[#2d2d2d] rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 hover:border-[#404040] text-white placeholder-gray-500"
                 placeholder="Enter your email"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -75,13 +101,13 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-300"
+                  className="w-full px-4 py-3 pr-12 bg-[#212121] border border-[#2d2d2d] rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 hover:border-[#404040] text-white placeholder-gray-500"
                   placeholder="Enter your password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors duration-200"
                 >
                   {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                 </button>
@@ -94,11 +120,11 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 rounded-xl font-semibold text-white transition-all duration-200 ${
+              className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-200 ${
                 loading
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5'
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
+                  ? 'bg-white/10 cursor-not-allowed'
+                  : 'bg-white/10 hover:bg-white/20 border border-white/20 transform hover:-translate-y-0.5'
+              } focus:outline-none focus:ring-2 focus:ring-white/20`}
             >
               {loading ? (
                 <div className="flex items-center justify-center">
@@ -116,11 +142,11 @@ const Login = () => {
 
           {/* Register Link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-400">
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200"
+                className="text-white hover:text-gray-200 font-medium transition-colors duration-200 underline"
               >
                 Create account
               </Link>

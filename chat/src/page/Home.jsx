@@ -5,6 +5,7 @@ import ChatSlider from "../components/ChatSlider.jsx";
 import ChatMessages from "../components/chat/ChatMessages.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
+import { API_URL } from "../config/api.config.js";
 import { Chatfetch, Messagesfetch } from "../store/actions/chataction.jsx";
 import {authenticateUser} from "../store/actions/useraction.jsx"
 
@@ -15,7 +16,8 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   console.log(userDetails)
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
-  const socketInstance = io('http://localhost:3000', {
+
+  const socketInstance = io(API_URL, {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)
