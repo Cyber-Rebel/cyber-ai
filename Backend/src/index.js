@@ -1,3 +1,5 @@
+require('dotenv').config()
+const cookieparser = require('cookie-parser')
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -5,7 +7,7 @@ const AuthRouter = require('./routes/auth.routes.js')
 const ChatRouter = require('./routes/chat.routes.js')
 
 const cors = require('cors')
-
+console.log(process.env.FRONTEND_URL);
 // Get frontend URLs from environment variables
 const allowedOrigins = [
     process.env.FRONTEND_URL,
@@ -15,11 +17,8 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: allowedOrigins,
-    credentials: true,
+    credentials: true, // cookeis se kam kar sakt data read karna bhejtna rakan matlab cookis ke saath kam kar sak hto 
 }))
-    // credentials: true, // cookeis se kam kar sakt data read karna bhejtna rakan matlab cookis ke saath kam kar sak hto 
-
-const cookieparser = require('cookie-parser')
 
 app.use(express.json())
 app.use(cookieparser())

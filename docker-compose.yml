@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./Backend/.env
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    restart: unless-stopped
+    networks:
+      - cyber-ai-network
+
+  frontend:
+    build:
+      context: ./chat
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://backend:3000
+    depends_on:
+      - backend
+    networks:
+      - cyber-ai-network
+
+networks:
+  cyber-ai-network:
+    driver: bridge

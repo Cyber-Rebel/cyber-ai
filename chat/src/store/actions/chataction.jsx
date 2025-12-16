@@ -3,7 +3,7 @@ import { API_URL } from '../../config/api.config.js'
 import { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage ,setChats ,setMessages  } from '../Slicees/chatSlice.jsx'
 
 const BASE_URL = API_URL 
-
+console.log("API URL:", BASE_URL);
 export const Chatfetch = ()=> async (dispatch)=>{ // action hamesha dispatch hoti hae 
     const chat = await axios.get(`${BASE_URL}/api/chat`,{withCredentials:true})
     //  console.log(chat.data.chats) chat object with details
