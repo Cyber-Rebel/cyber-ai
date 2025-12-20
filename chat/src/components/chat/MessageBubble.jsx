@@ -26,68 +26,71 @@ const MessageBubble = ({ message }) => {
               : 'bg-transparent text-gray-200'
           }`}
         >
+          {/* Show image above text for both user and model messages */}
+          {message.imageUrl && (
+            <div className="mb-3">
+              <img 
+                src={message.imageUrl} 
+                alt={message.role === 'user' ? 'Uploaded' : 'Generated'} 
+                className="rounded-lg max-w-full h-auto max-h-[400px] object-contain" 
+              />
+            </div>
+          )}
+
           {message.role === 'user' ? (
             <p className="whitespace-pre-wrap">{message.content}</p>
           ) : (
-
-
-
-message.imageUrl ? (        <div>    <img src={message.imageUrl} alt="Generated" className="rounded-lg max-w-full h-auto" /> 
-  <p className="mt-2 whitespace-pre-wrap ">{message.content} 🗿</p></div>
-
-) : (<>
-<ReactMarkdown 
-  remarkPlugins={[remarkGfm]}
-  components={{
-    code({ node, inline, className, children, ...props }) {
-      const match = /language-(\w+)/.exec(className || '');
-      return !inline && match ? (
-        <SyntaxHighlighter
-        style={dracula}
-        language={match[1]}
-        PreTag="div"
-        className="rounded-lg my-2"
-        {...props}
-        >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  ) : (
-                    <code className="text-green-600 px-1 py-0.5 rounded text-sm" {...props}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
+            <>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        style={dracula}
+                        language={match[1]}
+                        PreTag="div"
+                        className="rounded-lg my-2"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className="text-green-600 px-1 py-0.5 rounded text-sm" {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
               >
-              {message.content}
-            </ReactMarkdown>
-            
-            {/* GPT-style icon buttons for speak/stop */}
-            <div className="flex gap-2 mt-3">
-              <button
-                onClick={() => speak({ text: message.content })}
-                disabled={speaking}
-                aria-label="Read aloud"
-                className="p-2 rounded-md hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                title={speaking ? 'Speaking...' : 'Read aloud'}
-              >
-                <Volume2 size={18} strokeWidth={1.5} />
-              </button>
+                {message.content}
+              </ReactMarkdown>
               
-              {speaking && (
+              {/* GPT-style icon buttons for speak/stop */}
+              <div className="flex gap-2 mt-3">
                 <button
-                  onClick={() => cancel()}
-                  aria-label="Stop reading"
-                  className="p-2 rounded-md hover:bg-red-900/30 text-red-400 hover:text-red-300 transition-colors duration-200"
-                  title="Stop reading"
+                  onClick={() => speak({ text: message.content })}
+                  disabled={speaking}
+                  aria-label="Read aloud"
+                  className="p-2 rounded-md hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  title={speaking ? 'Speaking...' : 'Read aloud'}
                 >
-                  <Square size={18} strokeWidth={1.5} fill="currentColor" />
+                  <Volume2 size={18} strokeWidth={1.5} />
                 </button>
-              )}
-            </div>
-          </>
-          
-            )       
+                
+                {speaking && (
+                  <button
+                    onClick={() => cancel()}
+                    aria-label="Stop reading"
+                    className="p-2 rounded-md hover:bg-red-900/30 text-red-400 hover:text-red-300 transition-colors duration-200"
+                    title="Stop reading"
+                  >
+                    <Square size={18} strokeWidth={1.5} fill="currentColor" />
+                  </button>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>

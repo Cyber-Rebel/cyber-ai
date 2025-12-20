@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '../../config/api.config.js'
-import { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage ,setChats ,setMessages  } from '../Slicees/chatSlice.jsx'
+import { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage ,setChats ,setMessages, setSearchTerm  } from '../Slicees/chatSlice.jsx'
 
 const BASE_URL = API_URL 
 console.log("API URL:", BASE_URL);
@@ -8,6 +8,25 @@ export const Chatfetch = ()=> async (dispatch)=>{ // action hamesha dispatch hot
     const chat = await axios.get(`${BASE_URL}/api/chat`,{withCredentials:true})
     //  console.log(chat.data.chats) chat object with details
     dispatch(setChats({chats:chat.data.chats}))
+}
+
+export const searchChats = (query = '') => async (dispatch) => {
+    const trimmed = (query || '').trim();
+
+    if (!trimmed) {
+        await dispatch(Chatfetch());
+        dispatch(setSearchTerm({ searchTerm: '' }));
+        return;
+    }
+
+    try {
+        const res = await axios.get(`${BASE_URL}/api/chat/search/${encodeURIComponent(trimmed)}`, { withCredentials: true });
+        dispatch(setChats({ chats: res.data.chats || [] }));
+        dispatch(setSearchTerm({ searchTerm: trimmed }));
+    } catch (error) {
+        console.error('Error searching chats:', error);
+        dispatch(setSearchTerm({ searchTerm: trimmed }));
+    }
 }
 export const Messagesfetch = (chatId)=> async (dispatch)=>{
     if(!chatId) return; // if no chat id is provided, do nothing

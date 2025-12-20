@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FiSend, FiPlus, FiPaperclip, FiImage, FiMic, FiX } from 'react-icons/fi';
 import { BsStopCircle } from 'react-icons/bs';
 
-const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, setWhichInput }) => {
+const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, setWhichInput, selectedFile, setSelectedFile }) => {
   const [showUpload, setShowUpload] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [dragOver, setDragOver] = useState(false);
@@ -13,9 +13,35 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
     setShowUpload((prev) => !prev);
   };
 
-  const handleImageChange = () => {
+  const handleImageModeToggle = () => {
     whichInput === 'text' ? setWhichInput('image') : setWhichInput('text');
     setShowUpload(false);
+  };
+
+  // Handle file selection from input
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result.split(',')[1]; // Remove data:...;base64, prefix
+      setSelectedFile({
+        data: base64,
+        type: file.type,
+        name: file.name
+      });
+      setWhichInput('file');
+    };
+    reader.readAsDataURL(file);
+    setShowUpload(false);
+    e.target.value = ''; // Reset input so same file can be selected again
+  };
+
+  // Clear selected file
+  const handleClearFile = () => {
+    setSelectedFile(null);
+    setWhichInput('text');
   };
 
   // Auto-resize textarea
@@ -57,8 +83,18 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
     setDragOver(false);
     const files = e.dataTransfer.files;
     if (files.length > 0) {
-      // Handle file upload logic here
-      console.log('Files dropped:', files);
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result.split(',')[1];
+        setSelectedFile({
+          data: base64,
+          type: file.type,
+          name: file.name
+        });
+        setWhichInput('file');
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -145,7 +181,7 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                         </div>
                       </button>
                       <button 
-                        onClick={handleImageChange}
+                        onClick={handleImageModeToggle}
                         className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-cyan-400 hover:bg-white/8 transition-all duration-200 group text-left"
                       >
                         <FiImage size={16} className="text-gray-400 group-hover:text-cyan-400 flex-shrink-0" />
@@ -173,6 +209,17 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                   <span className="text-xs font-medium text-purple-300">Image Mode</span>
                 </div>
               )}
+
+              {/* File Preview Indicator */}
+              {whichInput === 'file' && selectedFile && (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
+                  <FiPaperclip size={12} className="text-cyan-400" />
+                  <span className="text-xs font-medium text-cyan-300 max-w-[120px] truncate">{selectedFile.name}</span>
+                  <button onClick={handleClearFile} className="ml-1 text-gray-400 hover:text-white">
+                    <FiX size={12} />
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Main Input Area */}
@@ -184,7 +231,7 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                 onKeyDown={handleKeyDown}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                placeholder={whichInput === 'image' ? "Describe the image you want to create..." : "Message cyber-ai..."}
+                placeholder={whichInput === 'image' ? "Describe the image you want to create..." : whichInput === 'file' ? "Add a message about this file (optional)..." : "Message cyber-ai..."}
                 className="w-full resize-none bg-transparent text-gray-100 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 py-2 px-1 text-[15px] leading-6 max-h-[200px] custom-scrollbar"
                 rows={1}
                 disabled={loading}
@@ -208,10 +255,10 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
             <div className="flex items-end">
               <button
                 onClick={onSend}
-                disabled={!input.trim() || loading}
+                disabled={(!input.trim() && !selectedFile) || loading}
                 className={`
                   flex items-center justify-center w-10 h-10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:ring-offset-2 focus:ring-offset-transparent
-                  ${input.trim() && !loading
+                  ${(input.trim() || selectedFile) && !loading
                     ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 hover:shadow-lg hover:shadow-cyan-500/25 hover:scale-110 active:scale-95' 
                     : 'bg-white/5 text-gray-500 cursor-not-allowed'
                   }
@@ -234,9 +281,8 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
             ref={fileInputRef}
             type="file"
             className="hidden"
-            multiple
             accept="image/*,text/*,.pdf,.doc,.docx"
-            onChange={handleImageChange}
+            onChange={handleFileSelect}
           />
         </div>
       </div>

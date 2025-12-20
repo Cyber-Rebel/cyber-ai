@@ -3,10 +3,14 @@ const cookie = require("cookie");
 const jwt = require("jsonwebtoken");
 const UserModels = require("../Models/user.models.js");
 const Message = require("../Models/message.model.js");
-const { geminiresponce,generatevector } = require("../services/ai.services.js");
+const { geminiresponce,generatevector ,geminiResponseWithFile } = require("../services/ai.services.js");
 const ImageGenerate = require('../services/Imagegererate.js');
+const multer = require('multer');
 const {createMemory,queryMemory} = require('../services/vector.services.js');
-
+const {uploadfile , anyfileupload} = require("../services/storge.service.js");
+const upload = multer({
+    storage: multer.memoryStorage()
+})
 const socketserver = (httpserver) => {
   // Get frontend URLs from environment variables
   const allowedOrigins = [
@@ -92,7 +96,61 @@ socket.emit("ai-repsonces", { // np103177@gmail.com
       })
 
 
+    } else if (messagepayload.whichInput === 'file') {
+      try {
+        // messagepayload.file should be: { data: base64String, type: 'image/png', name: 'file.png' }
+        const fileData = messagepayload.file;
+        if (!fileData || !fileData.data) {
+          console.error('No file data received');
+          socket.emit('ai-repsonces', { content: 'No file received', chat: messagepayload.chat });
+          return;
+        }
+
+        console.log('File received at socket server:', fileData.name || 'unnamed');
+
+        // Convert base64 to buffer for storage
+        const fileBuffer = Buffer.from(fileData.data, 'base64');
+        const uploadResult = await anyfileupload(fileBuffer);
+
+        // Save user message with uploaded file URL
+        await Message.create({
+          chat: messagepayload.chat,
+          content: messagepayload.prompt || '',
+          user: socket.user._id,
+          role: 'user',
+          imageUrl: uploadResult.url
+        });
+
+        // Gemini call with file (expects { data: base64, type: mimeType })
+        const aiReply = await geminiResponseWithFile(
+          messagepayload.prompt || 'Describe this file',
+          { data: fileData.data, type: fileData.type || 'application/octet-stream' }
+        );
+
+        // Emit response
+        socket.emit('ai-repsonces', {
+          content: aiReply,
+          chat: messagepayload.chat
+        });
+
+        // Save AI message
+        await Message.create({
+          chat: messagepayload.chat,
+          content: aiReply,
+          user: socket.user._id,
+          role: 'model'
+        });
+      } catch (err) {
+        console.error('Error processing file:', err);
+        socket.emit('ai-repsonces', { content: 'Error processing file', chat: messagepayload.chat });
       }
+
+
+
+
+
+
+    }
       
 else{
 

@@ -26,6 +26,7 @@ return (
       
       {/* Chat - Protected Route */}
       <Route path="/chat" element={id ? <Home /> : <Navigate to="/login" />} />
+      <Route path="/chat/:chatId" element={id ? <Home /> : <Navigate to="/login" />} />
 
       <Route path="/login" element={!id ? <Login /> : <Navigate to="/chat" />} />
 

@@ -28,6 +28,7 @@ export default function ChatMessages({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [whichInput , setWhichInput] = useState('text');
+  const [selectedFile, setSelectedFile] = useState(null); // { data: base64, type, name }
 
 
   // Redux
@@ -59,24 +60,57 @@ export default function ChatMessages({
   };
 
   const handleSend = () => {
-    if (!input.trim()) return;
+    // For file mode, allow sending even if input is empty (file is the content)
+    if (!input.trim() && whichInput !== 'file') return;
+    if (whichInput === 'file' && !selectedFile) return;
+
+    const inputMode = whichInput;
     setLoading(true);
-    socket.emit("ai-message", {
-      chat: chatId,
-      content: input,
-      whichInput: whichInput,
-      model: selectedModel,
-    });
-    dispatch(
-      addNewMessage({
-        _id: Date.now().toString(),
-        content: input,
+
+    if (inputMode === 'file' && selectedFile) {
+      // Send file message
+      socket.emit("ai-message", {
         chat: chatId,
-        imageUrl: null,
-        role: "user",
-      })
-    );
-    setInput("");
+        whichInput: 'file',
+        prompt: input || 'Describe this file',
+        file: selectedFile, // { data: base64, type, name }
+        model: selectedModel,
+      });
+      dispatch(
+        addNewMessage({
+          _id: Date.now().toString(),
+          content: input || 'Uploaded file: ' + selectedFile.name,
+          chat: chatId,
+          imageUrl: null,
+          role: "user",
+        })
+      );
+      setInput("");
+      setSelectedFile(null);
+      setWhichInput('text');
+    } else {
+      // Normal text or image mode
+      socket.emit("ai-message", {
+        chat: chatId,
+        content: input,
+        whichInput: inputMode,
+        model: selectedModel,
+      });
+      dispatch(
+        addNewMessage({
+          _id: Date.now().toString(),
+          content: input,
+          chat: chatId,
+          imageUrl: null,
+          role: "user",
+        })
+      );
+      setInput("");
+
+      if (inputMode === "image") {
+        setWhichInput("text");
+      }
+    }
   };
 
   const handleModelSelect = (model) => {
@@ -108,6 +142,7 @@ setWhichInput('text');
         })
       );
       if (data) {
+        setWhichInput("text"); // ensure UI returns to text mode after an image run completes
         setLoading(false);
       }
     };
@@ -149,6 +184,8 @@ setWhichInput('text');
             onSend={handleSend}
             loading={loading}
             onKeyPress={handleKeyPress}
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
           />
         </>
       )}

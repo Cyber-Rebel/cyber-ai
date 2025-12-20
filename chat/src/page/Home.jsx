@@ -1,6 +1,7 @@
 
 
 import {  useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import ChatSlider from "../components/ChatSlider.jsx";
 import ChatMessages from "../components/chat/ChatMessages.jsx";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +11,8 @@ import { Chatfetch, Messagesfetch } from "../store/actions/chataction.jsx";
 import {authenticateUser} from "../store/actions/useraction.jsx"
 
 const Home = () => {
+  const { chatId: urlChatId } = useParams();
+  const navigate = useNavigate();
   const [desktop,setdesktop ] = useState(window.innerWidth >= 768); // Example: true if width >= 768px 1089>768 1089 sppose laptop
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
@@ -40,6 +43,11 @@ const Home = () => {
     socketInstance.on("connect", () => {
       console.warn("Connected to server socket ");
     });
+
+    // Load chat from URL param if present
+    if (urlChatId) {
+      dispatch(Messagesfetch(urlChatId));
+    }
     window.addEventListener('resize',()=>{
       setdesktop(window.innerWidth >= 768)
     })
@@ -55,7 +63,7 @@ const Home = () => {
   return (<>
     <div className="flex h-screen bg-[#212121] overflow-hidden">
       {/* Sidebar */}
-      <ChatSlider userDetails={userDetails} desktop={desktop} chats={chats} selectedChatId={selectedChatId} />
+      <ChatSlider userDetails={userDetails} desktop={desktop} chats={chats} selectedChatId={selectedChatId} navigate={navigate} />
       
       {/* Main Chat Area */}
       <div className={`flex-1 flex flex-col ${!desktop ? 'w-full' : ''} relative bg-[#212121]`}>

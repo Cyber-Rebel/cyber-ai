@@ -4,7 +4,7 @@ import ChatItem from './ChatItem.jsx';
 
 const   ChatList = ({ chats, selectedChatId, onChatSelect, onDelete, truncateTitle }) => {
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto min-h-0 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent hover:scrollbar-thumb-gray-500">
       <div className="p-2">
         {!chats || chats.length === 0 ? (
           <EmptyChatList />

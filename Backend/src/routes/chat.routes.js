@@ -11,6 +11,7 @@ routes.post('/', authMiddleware.authUser,chatController.createChat) // authUser 
 /* GET /api/chat/ */
 routes.get('/', authMiddleware.authUser, chatController.getChats)
 
+routes.get('/search/:query', authMiddleware.authUser, chatController.searchChats);
 
 /* GET /api/chat/messages/:id */
 routes.get('/messages/:id', authMiddleware.authUser, chatController.getMessages)

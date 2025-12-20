@@ -18,5 +18,8 @@ const chatSchema = new mongoose.Schema({
 
 
 },{timestamps:true})
+
+chatSchema.index({ tittle: 'text' }); // Text index for tittle field to enable text search
+
 const chatModel = new mongoose.model('chat',chatSchema)
 module.exports = chatModel

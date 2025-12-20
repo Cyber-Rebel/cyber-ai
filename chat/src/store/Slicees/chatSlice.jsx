@@ -1,14 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-    chats: [],
-   selectedChatId:null , // current open chat // defalut null hogi 
-    isSending: false,
-    Messages:[],
-    // setParticulateChatMessages:[],
-  selectActiveChatMessages:[] 
-}
-
+        chats: [],
+     selectedChatId:null , // current open chat // defalut null hogi 
+        isSending: false,
+        Messages:[],
+        searchTerm: '',
+        // setParticulateChatMessages:[],
+    selectActiveChatMessages:[] 
+};
 const chatSlice = createSlice({
     name: 'chat',
     initialState,
@@ -16,6 +16,9 @@ const chatSlice = createSlice({
         // part   1
         setChats: (state, action) => {
             state.chats = action.payload.chats;
+        },
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload?.searchTerm || '';
         },
         // part 2 
         setMessages : (state, action) => {
@@ -61,7 +64,7 @@ const chatSlice = createSlice({
         
 
 }})
-export const { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage,setChats ,setMessages  } = chatSlice.actions
+export const { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage,setChats ,setMessages, setSearchTerm  } = chatSlice.actions
 export default chatSlice.reducer
 
 

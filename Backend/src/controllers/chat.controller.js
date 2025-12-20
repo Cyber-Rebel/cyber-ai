@@ -21,6 +21,33 @@ const createChat = async (req,res)=>{
 
 }
 
+async  function searchChats(req, res) {
+    const userId = req.user._id;
+    const query = req.params.query;
+    
+    try {
+        const chats = await chatModel.find({
+            user: userId,
+
+            $text: { $search: query } // Text search using the text index on tittle field
+        })
+        //Sirf us user ke chats laa raha hai
+// Dusre user ke chats nahi aayenge
+//$regex MongoDB ka search operator hai.
+// Iska kaam hai text ke andar pattern dhundhna.
+    
+        res.status(200).json({
+            message: 'Chats retrieved successfully',
+            chats: chats
+        }); 
+    
+    }catch (error) {
+        console.error('Error searching chats:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+
+
+}
 
 
 async function getChats(req, res) {
@@ -73,4 +100,20 @@ async function deleteChat(req, res) {
 
 module.exports={
     createChat,getChats,getMessages ,deleteChat
-}
+,searchChats}
+
+
+
+
+
+// Basic example
+// { name: { $regex: "react" } }
+
+
+// Ye match karega:
+
+// "react developer"
+
+// "learn react"
+
+// "ReactJS"

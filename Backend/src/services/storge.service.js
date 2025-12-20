@@ -31,4 +31,21 @@ return new Promise((resolve, reject) =>{
 
 })
 }
-module.exports=uploadfile;
+function anyfileupload(file){
+  return new Promise((resolve, reject) =>{
+    imagekit.upload({
+      file: file,
+      fileName:`${Date.now()}_${Math.random().toString(36).substring(2, 8)}`
+    },(error, result)=>{
+      if(error){
+        console.log(error);
+        reject(error.message);
+      }else{
+        resolve(result)
+      }
+    })
+  });
+}
+
+module.exports={uploadfile,anyfileupload}
+

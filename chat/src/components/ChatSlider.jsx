@@ -16,7 +16,7 @@ import NewChatModal from './NewChatModal.jsx';
 // Import styles
 import './ChatSlider.css';
 
-const ChatSlider = ({ chats, selectedChatId, desktop, userDetails }) => {
+const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) => {
   // State management
   const [open, setOpen] = useState(false);
   const [showUserModal, setShowUserModal] = useState(false);
@@ -60,6 +60,10 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails }) => {
       
       if (result && result.success) {
         toast.success(`Chat "${title}" created!`, { id: loadingToast });
+        // Navigate to the newly created chat
+        if (result.chat?._id) {
+          navigate(`/chat/${result.chat._id}`);
+        }
       } else {
         toast.error('Failed to create chat. Please try again.', { id: loadingToast });
       }
@@ -124,6 +128,7 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails }) => {
 
   const handleChatSelect = (data) => {
     dispatch(Messagesfetch(data._id));
+    navigate(`/chat/${data._id}`);
   };
 
   const handleUserModalClick = () => {
@@ -146,7 +151,7 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails }) => {
           style: {
             background: '#2d2d2d',
             color: '#fff',
-            border: '1px solid #404040',
+            border: '10px solid #404000040',
           },
           success: {
             iconTheme: {
