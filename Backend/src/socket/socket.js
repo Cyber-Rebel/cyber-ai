@@ -51,7 +51,7 @@ const socketserver = (httpserver) => {
     }
     next();}
     catch(error){
-      console.log('Errror'+error)
+      // Authentication error handled
     }
   });
 
@@ -87,8 +87,6 @@ const data =  await ImageGenerate(messagepayload.content)
   role: "model",
   
 })
-console.log("Generated image url:",response)
-
 socket.emit("ai-repsonces", { // np103177@gmail.com
         content: response.content,
         imageUrl:response.imageUrl,
@@ -105,8 +103,6 @@ socket.emit("ai-repsonces", { // np103177@gmail.com
           socket.emit('ai-repsonces', { content: 'No file received', chat: messagepayload.chat });
           return;
         }
-
-        console.log('File received at socket server:', fileData.name || 'unnamed');
 
         // Convert base64 to buffer for storage
         const fileBuffer = Buffer.from(fileData.data, 'base64');

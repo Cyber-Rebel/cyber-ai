@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 const Mainrouter = () =>{
     const user = sessionStorage.getItem("user")
     const id = useSelector((state) => state.user.id);
-    console.log("user id in main router",id)
     useEffect(()=>{
 
         

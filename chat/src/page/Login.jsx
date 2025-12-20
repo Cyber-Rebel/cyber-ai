@@ -32,7 +32,6 @@ const Login = () => {
       toast.success('Login successful!', { id: loadingToast })
       navigate('/')
     }catch(err){
-      console.log(err)
       toast.error('Login failed. Please try again.', { id: loadingToast })
     } finally {
       setLoading(false)

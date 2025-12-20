@@ -21,8 +21,6 @@ const SettingsModal = ({ isOpen, onClose, userDetails }) => {
     domainVerified: false
   });
  const title = useSelector(state=>state.chat)
- console.log('---->',title.chats
-)
   if (!isOpen) return null;
 
   const sidebarItems = [

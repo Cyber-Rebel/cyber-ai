@@ -52,7 +52,6 @@ const chatSlice = createSlice({
        addNewMessage: (state, action) => {
         if (!state.selectedChatId) return;  // No chat selected, do nothing
         
-            console.log(action.payload.role)
         state.Messages.push(action.payload);
     
         },

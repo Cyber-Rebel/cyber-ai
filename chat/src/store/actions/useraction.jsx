@@ -42,7 +42,6 @@ export const registerUser = (data)=> async (dispatch)=>{
 
     
   }catch(err){
-    console.log(err)
     return { error: true, message:  err };
   
 
@@ -52,9 +51,7 @@ export const registerUser = (data)=> async (dispatch)=>{
 export const  authenticateUser = () => async (dispatch) => {
   try{
   const response = await axios.get(`${BASE_URL}/api/auth/me`,{withCredentials:true})
-    console.log("the line 60",response.data)
     const userData = response.data.user
-    console.log("the line 62",userData)
     dispatch(setUser({
       id: userData.id,
       firstName: userData.firstName,
@@ -75,7 +72,6 @@ export const  authenticateUser = () => async (dispatch) => {
 export const logoutUser = () => async (dispatch) => {
   try{
     const response = await axios.get(`${BASE_URL}/api/auth/logout`, {withCredentials:true})
-    console.log("the line 87",response.data)
     dispatch(clearUser())
     return response.data.message // Return user data for further use
   }catch(err){    

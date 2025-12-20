@@ -74,7 +74,6 @@ async function geminiresponce(content) {
  });
 
     
- console.log('Gemini response:',response.text)
  
   
   return (response.text)}

@@ -17,14 +17,12 @@ const Home = () => {
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const userDetails = useSelector((state) => state.user);
-  console.log(userDetails)
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
 
   const socketInstance = io(API_URL, {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)
-  console.log("Selected Chat ID:", selectedChatId);
   useEffect(() => {
   const init = async () => {
     try {

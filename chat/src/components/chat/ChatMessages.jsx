@@ -131,7 +131,6 @@ setWhichInput('text');
   // Effects
   useEffect(() => {
     const handleAiResponse = (data) => {
-      console.log("AI Response:", data);
       dispatch(
         addNewMessage({
           _id: Date.now().toString(),

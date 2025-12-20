@@ -3,7 +3,6 @@ import { API_URL } from '../../config/api.config.js'
 import { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage ,setChats ,setMessages, setSearchTerm  } from '../Slicees/chatSlice.jsx'
 
 const BASE_URL = API_URL 
-console.log("API URL:", BASE_URL);
 export const Chatfetch = ()=> async (dispatch)=>{ // action hamesha dispatch hoti hae 
     const chat = await axios.get(`${BASE_URL}/api/chat`,{withCredentials:true})
     //  console.log(chat.data.chats) chat object with details
@@ -63,7 +62,6 @@ export const createNewchats = ({tittle}) => async (dispatch) => {
 export const deleteChat = (chatId) => async (dispatch) => {
     try{
         const response = await axios.delete(`${BASE_URL}/api/chat/${chatId}`, { withCredentials: true });
-        console.log(response.data);
         dispatch(Chatfetch()); // Fetch updated chat list after deleting a chat
         dispatch(setMessages({ Messages: [] })); // Clear messages if the deleted chat was selected
     }catch(error){  

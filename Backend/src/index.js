@@ -7,7 +7,6 @@ const AuthRouter = require('./routes/auth.routes.js')
 const ChatRouter = require('./routes/chat.routes.js')
 
 const cors = require('cors')
-console.log(process.env.FRONTEND_URL);
 // Get frontend URLs from environment variables
 const allowedOrigins = [
     process.env.FRONTEND_URL,
