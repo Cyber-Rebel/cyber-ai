@@ -15,8 +15,6 @@ COPY . .
 
 
 
-# Switch to non-root user
-USER nodejs
 
 # Expose port
 EXPOSE 3000

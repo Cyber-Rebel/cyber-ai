@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +23,8 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: Backend
+          #   context: Backend  add context path and cheak second time ci/cd work properly
           file: Backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME}}/cyber-ai:${{ github.sha }}
