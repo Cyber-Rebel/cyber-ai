@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -6,7 +6,7 @@ import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useSpeechSynthesis } from 'react-speech-kit'
 import { Volume2, Square } from 'lucide-react'
 
-const MessageBubble = ({ message }) => {
+const MessageBubble = memo(({ message }) => {
   const { speak, cancel, speaking } = useSpeechSynthesis();
 
  
@@ -96,6 +96,6 @@ const MessageBubble = ({ message }) => {
       </div>
     </div>
   );
-};
+});
 
 export default MessageBubble;
