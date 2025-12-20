@@ -215,9 +215,41 @@ const LandingPage = () => {
               </p>
             </div>
 
-            {/* Feature 4 - Voice/Settings */}
+            {/* Feature 4 - File Understanding */}
             <div className="group">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-gradient-to-br from-emerald-400/30 via-teal-400/20 to-cyan-500/30 p-8 flex items-center justify-center relative">
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-6">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 bg-emerald-500/30 rounded-xl flex items-center justify-center border border-emerald-400/30">
+                      <span className="text-xl">📄</span>
+                    </div>
+                    <div className="w-12 h-12 bg-blue-500/30 rounded-xl flex items-center justify-center border border-blue-400/30">
+                      <span className="text-xl">🖼️</span>
+                    </div>
+                    <div className="w-12 h-12 bg-red-500/30 rounded-xl flex items-center justify-center border border-red-400/30">
+                      <span className="text-xl">📑</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-xl px-4 py-2 border border-white/20">
+                    <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span className="text-xs text-white/70">Drop any file here</span>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-white font-medium mb-2">Understands any file</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Upload images, PDFs, code files, or documents. cyber-ai analyzes and understands your files to provide intelligent responses.
+              </p>
+            </div>
+          </div>
+
+          {/* Additional Features Row */}
+          <div className="grid md:grid-cols-2 gap-8 mt-8">
+            {/* Feature 5 - Voice/Text to Speech */}
+            <div className="group">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-gradient-to-br from-violet-400/30 via-purple-400/20 to-fuchsia-500/30 p-8 flex items-center justify-center relative">
                 <img src={settingsImg} alt="Settings" className="absolute inset-0 w-full h-full object-cover opacity-10" />
                 <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 flex items-center gap-6">
                   <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
@@ -235,6 +267,32 @@ const LandingPage = () => {
               <h3 className="text-white font-medium mb-2">Text to Speech</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Listen to cyber-ai responses with built-in speech synthesis. Get hands-free answers while you work.
+              </p>
+            </div>
+
+            {/* Feature 6 - Chat Search */}
+            <div className="group">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-6 bg-gradient-to-br from-amber-400/30 via-orange-400/20 to-yellow-500/30 p-8 flex items-center justify-center relative">
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-6 w-full max-w-xs">
+                  <div className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3 border border-white/20 mb-3">
+                    <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span className="text-sm text-white/70">Search chats...</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+                      <p className="text-xs text-white/80">React hooks discussion</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+                      <p className="text-xs text-white/80">Image generation tips</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-white font-medium mb-2">Smart chat search</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Quickly find past conversations with powerful search. Never lose important discussions with cyber-ai again.
               </p>
             </div>
           </div>
