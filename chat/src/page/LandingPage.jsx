@@ -63,7 +63,7 @@ const LandingPage = () => {
 
           {/* Subtitle */}
           <p className={`text-lg text-gray-400 max-w-2xl mx-auto mb-10 transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            Chat about code, generate images, remember conversations, and anything on your mind.
+            With cyber-ai, chat about code, generate images, remember conversations, and explore anything on your mind.
           </p>
 
           {/* CTA Buttons */}
@@ -167,7 +167,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-white font-medium mb-2">Instant responses</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Real-time WebSocket connection delivers responses instantly. No waiting, no refreshing — just smooth conversation flow.
+                cyber-ai's real-time WebSocket connection delivers responses instantly. No waiting, no refreshing — just smooth conversation flow.
               </p>
             </div>
 
@@ -193,7 +193,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-white font-medium mb-2">Long-term memory with RAG</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Every conversation is stored as vectors in Pinecone. Your AI learns and remembers context across all your sessions.
+                Every conversation with cyber-ai is stored as vectors in Pinecone. Your AI learns and remembers context across all your sessions.
               </p>
             </div>
 
@@ -211,7 +211,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-white font-medium mb-2">Generate stunning images</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Create beautiful AI-generated images from text descriptions. Just describe what you want and watch it come to life.
+                With cyber-ai, create beautiful AI-generated images from text descriptions. Just describe what you want and watch it come to life.
               </p>
             </div>
 
@@ -234,7 +234,7 @@ const LandingPage = () => {
               </div>
               <h3 className="text-white font-medium mb-2">Text to Speech</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Listen to AI responses with built-in speech synthesis. Get hands-free answers while you work.
+                Listen to cyber-ai responses with built-in speech synthesis. Get hands-free answers while you work.
               </p>
             </div>
           </div>
@@ -253,19 +253,19 @@ const LandingPage = () => {
               { 
                 num: '01', 
                 title: 'Start a conversation', 
-                desc: 'Type your message or question. Ask about code, ideas, or anything.',
+                desc: 'Type your message or question to cyber-ai. Ask about code, ideas, or anything.',
                 icon: '💬'
               },
               { 
                 num: '02', 
-                title: 'AI processes & remembers', 
+                title: 'cyber-ai processes & remembers', 
                 desc: 'Gemini AI responds while storing context in vector memory.',
                 icon: '🧠'
               },
               { 
                 num: '03', 
                 title: 'Get smarter over time', 
-                desc: 'Each conversation improves future responses with RAG retrieval.',
+                desc: 'Each conversation with cyber-ai improves future responses with RAG retrieval.',
                 icon: '✨'
               }
             ].map((step, i) => (
