@@ -27,3 +27,4 @@ jobs:
           file: Backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME}}/cyber-ai:${{ github.sha }}
+# DOCKER_HUB_ACCESS_TOKEN DOCKER_HUB_USERNAME add in github secrets in github repository settings action section and chek ci/ cd work properly
