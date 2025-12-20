@@ -3,6 +3,7 @@ import Login from './page/Login.jsx';
 import Home from './page/Home.jsx';
 import Register from './page/Register.jsx';
 import LandingPage from './page/LandingPage.jsx';
+import NotFound from './page/NotFound.jsx';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -32,6 +33,9 @@ return (
 
 
       <Route path="/register" element={!id ? <Register /> : <Navigate to="/chat" />} />
+
+      {/* 404 Not Found - Catch all */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
 
 );
