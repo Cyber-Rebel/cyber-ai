@@ -9,9 +9,7 @@ const ChatRouter = require('./routes/chat.routes.js')
 const cors = require('cors')
 // Get frontend URLs from environment variables
 const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    process.env.FRONTEND_URL_ALT,
-    process.env.PRODUCTION_URL
+    "http://13.49.82.81",
 ].filter(Boolean);
 
 app.use(cors({
