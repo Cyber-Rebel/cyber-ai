@@ -52,6 +52,7 @@ jobs:
             docker run --name cyber-ai -d \
               --network cyber-ai-network \
               -p 3000:3000 \
+              -e PORT=${{ secrets.PORT }} \
               -e MONGODB_URI="${{ secrets.MONGODB_URI }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
