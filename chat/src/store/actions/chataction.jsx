@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { API_URL } from '../../config/api.config.js'
 import { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage ,setChats ,setMessages, setSearchTerm  } from '../Slicees/chatSlice.jsx'
 
-const BASE_URL = API_URL 
 export const Chatfetch = ()=> async (dispatch)=>{ // action hamesha dispatch hoti hae 
-    const chat = await axios.get(`${BASE_URL}/api/chat`,{withCredentials:true})
+    const chat = await axios.get(`http://localhost:3000/api/chat`,{withCredentials:true})
     //  console.log(chat.data.chats) chat object with details
     dispatch(setChats({chats:chat.data.chats}))
 }
@@ -19,7 +17,7 @@ export const searchChats = (query = '') => async (dispatch) => {
     }
 
     try {
-        const res = await axios.get(`${BASE_URL}/api/chat/search/${encodeURIComponent(trimmed)}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:3000/api/chat/search/${encodeURIComponent(trimmed)}`, { withCredentials: true });
         dispatch(setChats({ chats: res.data.chats || [] }));
         dispatch(setSearchTerm({ searchTerm: trimmed }));
     } catch (error) {
@@ -30,7 +28,7 @@ export const searchChats = (query = '') => async (dispatch) => {
 export const Messagesfetch = (chatId)=> async (dispatch)=>{
     if(!chatId) return; // if no chat id is provided, do nothing
     // alert(chatId)
-    const messages = await axios.get(`${BASE_URL}/api/chat/messages/${chatId}`,{withCredentials:true})
+    const messages = await axios.get(`http://localhost:3000/api/chat/messages/${chatId}`,{withCredentials:true})
     // console.log(messages.data.Messages) messages object with details
     // console.log("Messages:", messages.data.messages)
     dispatch(setMessages ({Messages:messages.data.messages}))
@@ -42,7 +40,7 @@ export const Messagesfetch = (chatId)=> async (dispatch)=>{
 
 export const createNewchats = ({tittle}) => async (dispatch) => {
     try {
-        const response = await axios.post(`${BASE_URL}/api/chat`, { tittle:tittle }, { withCredentials: true });
+        const response = await axios.post(`http://localhost:3000/api/chat`, { tittle:tittle }, { withCredentials: true });
         const newChat = response.data.chat;
         
         dispatch(createNewchat({ tittle: tittle }));
@@ -61,7 +59,7 @@ export const createNewchats = ({tittle}) => async (dispatch) => {
 }
 export const deleteChat = (chatId) => async (dispatch) => {
     try{
-        const response = await axios.delete(`${BASE_URL}/api/chat/${chatId}`, { withCredentials: true });
+        const response = await axios.delete(`http://localhost:3000/api/chat/${chatId}`, { withCredentials: true });
         dispatch(Chatfetch()); // Fetch updated chat list after deleting a chat
         dispatch(setMessages({ Messages: [] })); // Clear messages if the deleted chat was selected
     }catch(error){  

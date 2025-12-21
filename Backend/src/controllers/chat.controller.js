@@ -4,6 +4,9 @@ const createChat = async (req,res)=>{
     const {tittle} = req.body;
     // const userId = req.user; // Diya fir me mongoodb me objectid save hogi kyu hame model me types defind kiya hae and ek baat
     const userId = req.user._id; // User ID from the authenticated user
+    if (!tittle || tittle.length > 100) {
+  return res.status(400).json({ message: "Invalid title" });
+}
 
     const chat = await chatModel.create({
         user: userId,
@@ -24,7 +27,9 @@ const createChat = async (req,res)=>{
 async  function searchChats(req, res) {
     const userId = req.user._id;
     const query = req.params.query;
-    
+    if (!query || query.length > 50) {
+  return res.status(400).json({ message: "Invalid query" });
+}
     try {
         const chats = await chatModel.find({
             user: userId,
@@ -67,11 +72,19 @@ async function getChats(req, res) {
 }
 
 async function getMessages(req, res) {
-
+    const userId = req.user._id;
     const chatId = req.params.id;
 
-    const messages = await messageModel.find({ chat: chatId }).sort({ createdAt: 1 });
+    // Verify that the chat belongs to the user
+    const chat = await chatModel.findOne({ _id: chatId, user: userId });
+    if (!chat) {
+      return res.status(403).json({
+        message: "Access denied"
+      });
+    }
 
+    const messages = await messageModel.find({chat: chatId, user: userId }).sort({ createdAt: 1 });
+    
     res.status(200).json({
         message: "Messages retrieved successfully",
         messages: messages

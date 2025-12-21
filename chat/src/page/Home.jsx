@@ -23,38 +23,42 @@ const Home = () => {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)
+  
+  // Initial setup effect - runs once on mount
   useEffect(() => {
-  const init = async () => {
-    try {
-      await Promise.all([
-        dispatch(Chatfetch()),
-        dispatch(authenticateUser())
-      ]);
-    } finally {
-      // setLoading(false);
-    }
-  };
+    const init = async () => {
+      try {
+        await Promise.all([
+          dispatch(Chatfetch()),
+          dispatch(authenticateUser())
+        ]);
+      } finally {
+        // setLoading(false);
+      }
+    };
 
-  init();
+    init();
     setSocket(socketInstance);
 
     socketInstance.on("connect", () => {
       console.warn("Connected to server socket ");
     });
 
-    // Load chat from URL param if present
-    if (urlChatId) {
-      dispatch(Messagesfetch(urlChatId));
-    }
     window.addEventListener('resize',()=>{
       setdesktop(window.innerWidth >= 768)
     })
-    
     
     return () => {
       setSocket(null);
     };
   }, []);
+
+  // Effect to fetch messages when urlChatId changes
+  useEffect(() => {
+    if (urlChatId) {
+      dispatch(Messagesfetch(urlChatId));
+    }
+  }, [urlChatId, dispatch]);
 
 // console.log(desktop)
 

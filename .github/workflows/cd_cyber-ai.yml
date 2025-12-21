@@ -29,3 +29,60 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME}}/cyber-ai:${{ github.sha }}
 # DOCKER_HUB_ACCESS_TOKEN DOCKER_HUB_USERNAME add in github secrets in github repository settings action section and chek ci/ cd work properly
+
+      # - name: Deploy to VM via SSH
+      #   run: |
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+      #     chmod 600 ~/ssh_key
+      #     ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@18.207.131.147 << 'EOF'
+      #       # Create Docker network if it doesn't exist
+      #       docker network create draw-app-network || true
+            
+      #       # Run PostgreSQL container if not running
+      #       if ! docker ps | grep -q postgres-db; then
+      #         docker run --name postgres-db -d \
+      #           --network draw-app-network \
+      #           -p 5432:5432 \
+      #           -e POSTGRES_PASSWORD=mysecretpassword \
+      #           -e POSTGRES_DB=syncdraw \
+      #           -v postgres_data:/var/lib/postgresql/data \
+      #           --restart unless-stopped \
+      #           postgres:16-alpine
+              
+      #         # Wait for PostgreSQL to be ready
+      #         sleep 10
+      #       fi
+            
+      #       # Pull latest backend image
+      #       docker pull cyberkaps/sync-backend:latest
+            
+      #       # Stop and remove old container if exists
+      #       docker stop sync-backend || true
+      #       docker rm sync-backend || true
+            
+      #       # Run new backend container with database connection
+      #       docker run --name sync-backend -d \
+      #         --network draw-app-network \
+      #         -p 3001:3001 \
+      #         -e DATABASE_URL="postgresql://postgres:mysecretpassword@postgres-db:5432/syncdraw?schema=public" \
+      #         -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+      #         -e NODE_ENV=production \
+      #         --restart unless-stopped \
+      #         cyberkaps/sync-backend:latest
+            
+      #       # Run database migrations (wait for container to start)
+      #       sleep 5
+      #       docker exec sync-backend sh -c "cd packages/db && npx prisma migrate deploy"
+
+
+      #       # Reload Nginx to pick up changes (safe)
+      #       sudo systemctl reload nginx
+            
+      #       # Clean up old images
+      #       docker image prune -f
+      #     EOF
+      #     rm ~/ssh_key
+
+
+
+
