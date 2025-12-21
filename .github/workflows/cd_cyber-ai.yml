@@ -54,12 +54,12 @@ jobs:
               -p 3000:3000 \
               -e MONGODB_URI="${{ secrets.MONGODB_URI }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-              -e GOOGLE_GENAI_API_KEY="${{ secrets.GOOGLE_GENAI_API_KEY }}" \
-              -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" \
+              -e GOOGLE_GENAI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
+              -e PINECONE_API_KEY="${{ secrets.PINECONE_API }}" \
+              -e IMAGEKIT_PUBLIC_KEY="${{ secrets.IMAGEKIT_PUBLIC_KEY }}" \
+              -e IMAGEKIT_PRIVATE_KEY="${{ secrets.IMAGEKIT_PRIVATE_KEY }}" \
+              -e IMAGEKIT_URL_ENDPOINT="${{ secrets.IMAGEKIT_URL_ENDPOINT }}" \
               -e FRONTEND_URL="${{ secrets.FRONTEND_URL }}" \
-              -e FRONTEND_URL_ALT="${{ secrets.FRONTEND_URL_ALT }}" \
-              -e PRODUCTION_URL="${{ secrets.PRODUCTION_URL }}" \
-              -e NODE_ENV=production \
               --restart unless-stopped \
               ${{ secrets.DOCKER_HUB_USERNAME }}/cyber-ai:${{ github.sha }}
             
