@@ -37,7 +37,7 @@ jobs:
       - name: Deploy to VM via SSH
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
-          chmod 700 ~/ssh_key
+          chmod 600 ~/ssh_key
           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@${{ secrets.VM_IP }} << 'EOF'
             # Create Docker network if it doesn't exist
             docker network create cyber-ai-network || true
