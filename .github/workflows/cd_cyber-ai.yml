@@ -28,7 +28,7 @@ jobs:
           file: Backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/cyber-ai:${{ github.sha }}
-
+#    The trial second redeploy job 
   deploy:
     needs: build
     runs-on: ubuntu-latest
