@@ -19,7 +19,7 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
 
-  const socketInstance = io('http://13.49.82.81/', {
+  const socketInstance = io('https://ai.cyberhash.me', {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)

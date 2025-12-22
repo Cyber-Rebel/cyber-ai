@@ -9,7 +9,8 @@ const ChatRouter = require('./routes/chat.routes.js')
 const cors = require('cors')
 // Get frontend URLs from environment variables
 const allowedOrigins = [
-    "http://13.49.82.81",
+    "https://ai.cyberhash.me",
+    'http://localhost:5173',
 ].filter(Boolean);
 
 app.use(cors({

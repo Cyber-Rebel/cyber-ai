@@ -14,9 +14,8 @@ const upload = multer({
 const socketserver = (httpserver) => {
   // Get frontend URLs from environment variables
   const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    process.env.FRONTEND_URL_ALT,
-    process.env.PRODUCTION_URL
+    "https://ai.cyberhash.me",
+    'http://localhost:5173',
   ].filter(Boolean);
 
   const io = new Server(httpserver, {
