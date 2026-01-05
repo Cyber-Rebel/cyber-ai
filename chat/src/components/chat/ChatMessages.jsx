@@ -22,8 +22,12 @@ export default function ChatMessages({
   selectedChatId,
   userDetails
 }) {
-  // State management
-  const [selectedModel, setSelectedModel] = useState("gemini");
+  // State management - with localStorage persistence for selected model
+  const [selectedModel, setSelectedModel] = useState(() => {
+    // Try to load from localStorage, default to 'gemini'
+    const savedModel = localStorage.getItem('selectedAIModel');
+    return savedModel || 'gemini';
+  });
   const [openModelPopup, setOpenModelPopup] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,13 +43,7 @@ export default function ChatMessages({
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
-  // Model configurations
-  const models = [
-    { id: 'gemini', name: 'Gemini Pro', icon: <HiSparkles />, color: 'bg-blue-500' },
-    { id: 'gpt-4', name: 'GPT-4', icon: <HiLightningBolt />, color: 'bg-green-500' },
-    { id: 'claude', name: 'Claude', icon: <FiCpu />, color: 'bg-purple-500' },
-    
-  ];
+  // Model configurations - now handled in ModelSelector component
 
   // Event handlers
   const handleNewChat = () => {
@@ -74,7 +72,7 @@ export default function ChatMessages({
         whichInput: 'file',
         prompt: input || 'Describe this file',
         file: selectedFile, // { data: base64, type, name }
-        model: selectedModel,
+        modelName: selectedModel,
       });
       dispatch(
         addNewMessage({
@@ -94,7 +92,7 @@ export default function ChatMessages({
         chat: chatId,
         content: input,
         whichInput: inputMode,
-        model: selectedModel,
+        modelName: selectedModel,
       });
       dispatch(
         addNewMessage({
@@ -115,7 +113,12 @@ export default function ChatMessages({
 
   const handleModelSelect = (model) => {
     setSelectedModel(model);
+    // Save to localStorage for persistence
+    localStorage.setItem('selectedAIModel', model);
     setOpenModelPopup(false);
+    
+    // Optional: Show a brief notification that model changed
+    console.log(`✨ Switched to ${model} model`);
   };
 
   const handleKeyPress = (e) => {
@@ -158,7 +161,6 @@ setWhichInput('text');
     <div className="flex flex-col h-full bg-[#212121]">
       <ChatHeader 
         selectedModel={selectedModel}
-        models={models}
         onModelSelect={handleModelSelect}
         openModelPopup={openModelPopup}
         setOpenModelPopup={setOpenModelPopup}

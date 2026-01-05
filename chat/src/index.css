@@ -246,6 +246,36 @@ body {
   box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1), 0 0 20px rgba(34, 211, 238, 0.1);
 }
 
+/* Model Selector Animations */
+@keyframes modelSelectSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.model-selector-dropdown {
+  animation: modelSelectSlideIn 0.2s ease-out;
+}
+
+/* Model Logo Glow Effect */
+@keyframes logoGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+  }
+}
+
+.model-logo-active {
+  animation: logoGlow 2s ease-in-out infinite;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .cyber-button {

@@ -27,8 +27,4 @@ async function llamaChat(content) {
   }
 }
 
-// module.exports = llamaChat;
-
-llamaChat("Hello, how are you?").then(response => {
-  console.log("LLAMA Response:", response);
-});
+module.exports = { llamaChat };
