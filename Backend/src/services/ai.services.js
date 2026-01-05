@@ -5,14 +5,20 @@ const { GoogleGenAI } = require("@google/genai");
 const ai = new GoogleGenAI({});
 
 async function geminiresponce(content) {
+
+
+
+
   try{
     // console.log(socket)
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: content,
+    
      config:
       {
-            temperature: 0.7, 
+            temperature: 0.5, 
+            // maxOutputTokens: 5000, // max token limit
               systemInstruction: `
                             <persona> 
   <name>cyber-ai</name> 
@@ -28,6 +34,10 @@ async function geminiresponce(content) {
   <safety> Do not provide disallowed, harmful, or private information. Refuse clearly and offer safer alternatives. </safety> 
   <truthfulness> If unsure, say so and provide best-effort guidance or vetted sources. Do not invent facts, code, APIs, or prices. </truthfulness> 
 </behavior> 
+<response_rules>
+  Provide detailed answers with roughly 60–70 short lines when the user asks for explanations.
+  Avoid overly short replies unless explicitly requested.
+</response_rules>
 
 <capabilities> 
   <reasoning>Think step-by-step internally; share only the useful outcome. Show calculations or assumptions when it helps the user.</reasoning> 
@@ -79,11 +89,30 @@ async function geminiresponce(content) {
   return (response.text)}
   catch(err){
     console.log('Error when ai answer',err)
-    return "I couldn't process that, but I'm here beacaurse pervios chat issue create a New chat for better response";
+      if (err.status === 429) {
+    return "A Lot Reach on Website Daily free AI limit reached 😵‍💫 Please try again tomorrow or upgrade for unlimited access Send Message slove or not . (Error 429: Rate limit exceeded).";
+  }
+
+  if (err.status === 401) {
+    return "AI configuration issue. Please contact admin.";
+  }
+
+  if (err.status === 400) {
+    return "Message  invalid hai a create a new chat and keep in short don't send to many text .";
+  }
+
+  if (err.message?.includes("ECONN")) {
+    return "Network issue. Internet check karo.";
+  }
+    return "AI thoda busy hai. Please try again.";
   }
 }
 
 async function geminiResponseWithFile(prompt, file) {
+
+
+
+  try{
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: [
@@ -103,6 +132,7 @@ async function geminiResponseWithFile(prompt, file) {
   config:
       {
             temperature: 0.7, 
+            // maxOutputTokens: 350, // max token limit
               systemInstruction: `
                             <persona> 
   <name>cyber-ai</name> 
@@ -110,6 +140,11 @@ async function geminiResponseWithFile(prompt, file) {
   <voice> Friendly, concise, Gen-Z energy without slang overload. Use plain language. Add light emojis sparingly when it fits (never more than one per short paragraph). </voice> 
   <values> Honesty, clarity, practicality, user-first. Admit limits. Prefer actionable steps over theory. </values> 
 </persona> 
+
+<response_rules>
+  Provide detailed answers with roughly 60–70 short lines when the user asks for explanations.
+  Avoid overly short replies unless explicitly requested.
+</response_rules>
 
 <behavior> 
   <tone>Playful but professional. Supportive, never condescending.</tone> 
@@ -163,8 +198,26 @@ async function geminiResponseWithFile(prompt, file) {
               `}
   });
 
-  return response.text;
-}
+  return response.text;}
+  catch(err){
+    console.log('Error when ai answer with file',err)
+      if (err.status === 429) {
+    return "A Lot Reach on Website Daily free AI limit reached 😵‍💫 Please try again tomorrow or upgrade for unlimited access Send Message slove or not  .(Error 429: Rate limit exceeded).";
+
+  }
+  
+  if (err.status === 401) {
+    return "AI configuration issue. Please contact admin.";
+  }
+  
+  if (err.status === 400) {
+    return "Message  invalid hai a create a new chat and keep in short don't send to many text .";
+  }
+  
+  if (err.message?.includes("ECONN")) {
+    return "Network issue. Internet check karo.";
+  }
+  }}
 
 
 async function generatevector(content){

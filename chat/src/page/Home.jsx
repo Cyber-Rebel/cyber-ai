@@ -19,7 +19,7 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
 
-  const socketInstance = io('https://ai.cyberhash.me', {
+  const socketInstance = io('http://localhost:3000', {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)
@@ -55,10 +55,11 @@ const Home = () => {
 
   // Effect to fetch messages when urlChatId changes
   useEffect(() => {
-    if (urlChatId) {
+    if (urlChatId && urlChatId !== selectedChatId) {
+      // Only fetch if we're switching to a different chat
       dispatch(Messagesfetch(urlChatId));
     }
-  }, [urlChatId, dispatch]);
+  }, [urlChatId, dispatch, selectedChatId]);
 
 // console.log(desktop)
 

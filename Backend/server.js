@@ -4,10 +4,6 @@ const db = require('./src/db/db.js')
 
 const { createServer } = require("http");
 const socketserver = require('./src/socket/socket.js');
-db()
-const httpserver = createServer(app)
-socketserver(httpserver)
-
 
 const PORT = process.env.PORT;
 
@@ -16,6 +12,22 @@ if (!PORT) {
   process.exit(1);
 }
 
-httpserver.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+     db();     // <-- wait for DB connection
+
+    const httpserver = createServer(app);
+    
+    socketserver(httpserver);
+
+    httpserver.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+
+  } catch (error) {
+    console.log("❌ Database connection failed", error);
+    process.exit(1);
+  }
+};
+
+startServer();

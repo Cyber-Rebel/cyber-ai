@@ -15,6 +15,7 @@ import NewChatModal from './NewChatModal.jsx';
 
 // Import styles
 import './ChatSlider.css';
+import { useNavigate } from 'react-router-dom';
 
 const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) => {
   // State management
@@ -24,6 +25,7 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) =
   
   // Redux
   const dispatch = useDispatch();
+  const navigater = useNavigate()
 
   // Utility functions
   const formatDate = (dateString) => {
@@ -112,6 +114,8 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) =
         border: '1px solid #404040',
       }
     });
+    navigate('/chat');
+
   };
 
   const confirmDelete = async () => {
@@ -127,7 +131,7 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) =
   };
 
   const handleChatSelect = (data) => {
-    dispatch(Messagesfetch(data._id));
+    // Just navigate - Home component's useEffect will handle message fetching
     navigate(`/chat/${data._id}`);
   };
 

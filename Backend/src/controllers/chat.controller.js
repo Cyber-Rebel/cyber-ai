@@ -114,19 +114,3 @@ async function deleteChat(req, res) {
 module.exports={
     createChat,getChats,getMessages ,deleteChat
 ,searchChats}
-
-
-
-
-
-// Basic example
-// { name: { $regex: "react" } }
-
-
-// Ye match karega:
-
-// "react developer"
-
-// "learn react"
-
-// "ReactJS"

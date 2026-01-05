@@ -173,6 +173,7 @@ setWhichInput('text');
             loading={loading}
             messagesContainerRef={messagesContainerRef}
             messagesEndRef={messagesEndRef}
+           title={selectedChatId}
           />
           
           <ChatInput 

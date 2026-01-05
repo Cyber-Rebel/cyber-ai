@@ -27,18 +27,19 @@ const ChatItem = ({ chat, selectedChatId, onChatSelect, onDelete, truncateTitle 
         
         {/* Action Buttons */}
         <div className="flex items-center transition-opacity duration-200">
-          
-          
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete();
-            }}
-            className="p-1 hover:bg-[#3d3d3d] rounded transition-colors duration-200 ml-1"
-            title="Delete chat"
-          >
-            <FiTrash2 size={12} className="text-red-300" />
-          </button>
+          {/* Show delete button only when this chat is selected */}
+          {selectedChatId === chat._id && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete && onDelete(chat);
+              }}
+              className="p-1 hover:bg-[#3d3d3d] rounded transition-colors duration-200 ml-1"
+              title="Delete chat"
+            >
+              <FiTrash2 size={12} className="text-red-300" />
+            </button>
+          )}
         </div>
       </div>
     </div>

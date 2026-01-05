@@ -5,6 +5,7 @@ const db = ()=>{
         console.log('Data base connectd succesfully')
     }).catch((err)=>{
         console.error('Fail to connectd Database'+err)
+        return process.exit(1);
     })
 
 

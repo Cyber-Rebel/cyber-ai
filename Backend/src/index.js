@@ -5,6 +5,16 @@ const app = express()
 const path = require('path')
 const AuthRouter = require('./routes/auth.routes.js')
 const ChatRouter = require('./routes/chat.routes.js')
+const rateLimit = require('express-rate-limit')
+
+// Apply rate limiting to all requests
+// const limiter = rateLimit({
+//     windowMs: 15 * 60 * 1000, // 15 minutes first min and second is sec
+//     max: 100, // limit each IP to 100 requests per windowMs
+//     message: 'Too many requests from this IP, please try again later within 15 minutes.'
+// });
+// app.use(limiter);
+
 
 const cors = require('cors')
 // Get frontend URLs from environment variables
@@ -37,6 +47,7 @@ app.get('/api/health', (req, res) => {
         uptime: process.uptime()
     });
 });
+
 
 app.get("*name", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
