@@ -62,6 +62,53 @@ export const AI_MODELS = [
     )
   },
   { 
+    id: 'websearch', 
+    name: 'Web Search',
+    description: 'Internet Search',
+    logo: (
+      <div className="relative w-8 h-8 flex-shrink-0">
+        {/* Web Search Logo - Globe with magnifying glass */}
+        <svg viewBox="0 0 64 64" className="w-full h-full drop-shadow-lg">
+          <defs>
+            <linearGradient id="websearch-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{stopColor: '#10B981', stopOpacity: 1}} />
+              <stop offset="100%" style={{stopColor: '#059669', stopOpacity: 1}} />
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="30" fill="url(#websearch-gradient)"/>
+          <circle cx="28" cy="26" r="12" stroke="white" strokeWidth="3" fill="none"/>
+          <line x1="36" y1="34" x2="44" y2="42" stroke="white" strokeWidth="3.5" strokeLinecap="round"/>
+          <path d="M 15 48 L 18 45" stroke="white" strokeWidth="2" opacity="0.6" strokeLinecap="round"/>
+          <path d="M 20 50 L 24 46" stroke="white" strokeWidth="2" opacity="0.6" strokeLinecap="round"/>
+          <path d="M 46 18 L 49 15" stroke="white" strokeWidth="2" opacity="0.6" strokeLinecap="round"/>
+          <path d="M 50 20 L 54 16" stroke="white" strokeWidth="2" opacity="0.6" strokeLinecap="round"/>
+        </svg>
+      </div>
+    )
+  },
+  { 
+    id: 'codingdeepseek', 
+    name: 'Coding DeepSeek',
+    description: 'Code Expert AI',
+    logo: (
+      <div className="relative w-8 h-8 flex-shrink-0">
+        {/* Coding DeepSeek Logo - Code brackets with neural style */}
+        <svg viewBox="0 0 64 64" className="w-full h-full drop-shadow-lg">
+          <defs>
+            <linearGradient id="coding-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{stopColor: '#8B5CF6', stopOpacity: 1}} />
+              <stop offset="100%" style={{stopColor: '#6366F1', stopOpacity: 1}} />
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="30" fill="url(#coding-gradient)"/>
+          <path d="M 20 22 L 14 32 L 20 42" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M 44 22 L 50 32 L 44 42" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M 36 20 L 28 44" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+        </svg>
+      </div>
+    )
+  },
+  { 
     id: 'serper', 
     name: 'Serper Search',
     description: 'Web Search AI',
@@ -123,17 +170,13 @@ const ModelSelector = ({ selectedModel, onModelSelect, isOpen, onToggle }) => {
     <div className="relative">
       <button
         onClick={onToggle}
-        className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-[#2d2d2d] to-[#252525] hover:from-[#3a3a3a] hover:to-[#2d2d2d] text-gray-200 rounded-xl transition-all duration-200 border border-[#404040] hover:border-[#505050] shadow-lg hover:shadow-xl group"
+        className="flex items-center gap-2 px-3 py-2.5 bg-gradient-to-r from-[#2d2d2d] to-[#252525] hover:from-[#3a3a3a] hover:to-[#2d2d2d] text-gray-200 rounded-xl transition-all duration-200 border border-[#404040] hover:border-[#505050] shadow-lg hover:shadow-xl group"
       >
         <div className="transform group-hover:scale-110 transition-transform duration-200">
           {currentModel.logo}
         </div>
-        <div className="flex flex-col items-start">
-          <span className="text-sm font-semibold text-gray-100">{currentModel.name}</span>
-          <span className="text-xs text-gray-500">{currentModel.description}</span>
-        </div>
         <svg 
-          className={`w-4 h-4 transition-transform duration-200 text-gray-400 ml-2 ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 transition-transform duration-200 text-gray-400 ${isOpen ? 'rotate-180' : ''}`}
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"

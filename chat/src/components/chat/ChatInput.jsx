@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FiSend, FiPlus, FiPaperclip, FiImage, FiMic, FiX } from 'react-icons/fi';
+import { FiSend, FiPlus, FiPaperclip, FiImage, FiMic, FiX, FiSearch, FiShoppingCart, FiMoreHorizontal } from 'react-icons/fi';
 import { BsStopCircle } from 'react-icons/bs';
+import { HiSparkles, HiLightBulb } from 'react-icons/hi';
 
 const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, setWhichInput, selectedFile, setSelectedFile }) => {
   const [showUpload, setShowUpload] = useState(false);
@@ -168,34 +169,38 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
 
                 {/* Upload Options Dropdown */}
                 {showUpload && (
-                  <div className="absolute left-0 bottom-full mb-2 z-20 bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-2 min-w-[220px] animate-in slide-in-from-bottom-2 duration-200">
+                  <div className="absolute left-0 bottom-full mb-2 z-20 bg-slate-900/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-2 min-w-[240px] animate-in slide-in-from-bottom-2 duration-200">
                     <div className="space-y-1">
                       <button
                         onClick={() => fileInputRef.current?.click()}
-                        className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-cyan-400 hover:bg-white/8 transition-all duration-200 group text-left"
+                        className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left"
                       >
-                        <FiPaperclip size={16} className="text-gray-400 group-hover:text-cyan-400 flex-shrink-0" />
-                        <div>
-                          <span className="text-sm font-medium">Upload Files</span>
-                          <p className="text-xs text-gray-500 group-hover:text-gray-400">Documents, images, etc.</p>
-                        </div>
+                        <FiPaperclip size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
+                        <span className="text-sm font-medium">Add photos & files</span>
                       </button>
                       <button 
                         onClick={handleImageModeToggle}
-                        className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-cyan-400 hover:bg-white/8 transition-all duration-200 group text-left"
+                        className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left"
                       >
-                        <FiImage size={16} className="text-gray-400 group-hover:text-cyan-400 flex-shrink-0" />
-                        <div>
-                          <span className="text-sm font-medium">Image Mode</span>
-                          <p className="text-xs text-gray-500 group-hover:text-gray-400">Generate or analyze images</p>
-                        </div>
+                        <FiImage size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
+                        <span className="text-sm font-medium">Create image</span>
                       </button>
-                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-cyan-400 hover:bg-white/8 transition-all duration-200 group text-left">
-                        <FiMic size={16} className="text-gray-400 group-hover:text-cyan-400 flex-shrink-0" />
-                        <div>
-                          <span className="text-sm font-medium">Voice Input</span>
-                          <p className="text-xs text-gray-500 group-hover:text-gray-400">Coming soon</p>
-                        </div>
+                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
+                        <FiSearch size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
+                        <span className="text-sm font-medium">Deep research</span>
+                      </button>
+                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
+                        <FiShoppingCart size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
+                        <span className="text-sm font-medium">Shopping research</span>
+                      </button>
+                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
+                        <HiLightBulb size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
+                        <span className="text-sm font-medium">Thinking</span>
+                      </button>
+                      <div className="border-t border-white/10 my-1"></div>
+                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
+                        <FiMoreHorizontal size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
+                        <span className="text-sm font-medium">More</span>
                       </button>
                     </div>
                   </div>
