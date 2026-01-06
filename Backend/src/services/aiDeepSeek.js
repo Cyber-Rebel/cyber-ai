@@ -1,7 +1,6 @@
 const axios = require("axios");
-require("dotenv").config();
 
-async function deepseekResponse(content) {
+async function deepseek(content) {
   try {
     const res = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
@@ -64,4 +63,4 @@ async function deepseekResponse(content) {
   }
 }
 
-module.exports = deepseekResponse;
+module.exports = {deepseek};
