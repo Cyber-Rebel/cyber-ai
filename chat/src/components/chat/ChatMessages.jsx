@@ -105,7 +105,7 @@ export default function ChatMessages({
       );
       setInput("");
 
-      if (inputMode === "image") {
+      if (inputMode === "image" || inputMode === "research" || inputMode === "code") {
         setWhichInput("text");
       }
     }

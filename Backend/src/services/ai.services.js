@@ -1,4 +1,6 @@
 const { GoogleGenAI } = require("@google/genai");
+const { llamaChat } = require("../services/llamaChat.js");
+
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
 // temperature  ki apka model kitna creative hoga 0-1 but create ke chakar me kabhi kabhi lagat answer deta 
@@ -87,23 +89,35 @@ async function geminiresponce(content) {
  
   
   return (response.text)}
-  catch(err){
-    console.log('Error when ai answer',err)
-      if (err.status === 429) {
-    return "A Lot Reach on Website Daily free AI limit reached 😵‍💫 Please try again tomorrow or upgrade for unlimited access Send Message slove or not . (Error 429: Rate limit exceeded).";
-  }
+catch (err) {
+    console.log("Gemini Error:", err?.status, err?.message);
 
-  if (err.status === 401) {
-    return "AI configuration issue. Please contact admin.";
-  }
+    // -------------------------
+    // ⚠️ GEMINI FAILED → FALLBACK TO LLAMA
+    // -------------------------
+    if (err.status === 429 || err.status === 400) {
+      console.log("Fallback to LLaMA because Gemini failed.");
 
-  if (err.status === 400) {
-    return "Message  invalid hai a create a new chat and keep in short don't send to many text .";
-  }
+      try {
+        const llamaAnswer = await llamaChat(content);
+        return llamaAnswer;
+      } catch (llamaErr) {
+        console.log("LLaMA failed too:", llamaErr);
+        return "Both Gemini & LLaMA unavailable. Try again later.";
+      }
+    }
 
-  if (err.message?.includes("ECONN")) {
-    return "Network issue. Internet check karo.";
-  }
+    // -------------------------
+    // Other Errors
+    // -------------------------
+    if (err.status === 401) {
+      return "AI configuration error. Contact admin.";
+    }
+
+    if (err.message?.includes("ECONN")) {
+      return "Network issue. Internet check karo.";
+    }
+
     return "AI thoda busy hai. Please try again.";
   }
 }

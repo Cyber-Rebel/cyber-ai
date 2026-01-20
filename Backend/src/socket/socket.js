@@ -38,6 +38,7 @@ const socketserver = (httpserver) => {
           chat: messagepayload.chat,
         })
       }
+      console.log("Processing ai-message with whichInput:", messagepayload.whichInput);
       
       if(messagepayload.whichInput==='image'){
         await handleImageMessage(socket, messagepayload);

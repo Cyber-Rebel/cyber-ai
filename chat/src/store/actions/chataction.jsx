@@ -3,7 +3,7 @@ import { createNewchat ,selectedChatIde ,activeChatMessages,addNewMessage ,setCh
 
 
 export const Chatfetch = ()=> async (dispatch)=>{ // action hamesha dispatch hoti hae 
-    const chat = await axios.get(`http://localhost:3000/api/chat`,{withCredentials:true})
+    const chat = await axios.get(`https://ai.cyberhash.me/api/chat`,{withCredentials:true})
     //  console.log(chat.data.chats) chat object with details
     dispatch(setChats({chats:chat.data.chats}))
 }
@@ -18,7 +18,7 @@ export const searchChats = (query = '') => async (dispatch) => {
     }
 
     try {
-        const res = await axios.get(`http://localhost:3000/api/chat/search/${encodeURIComponent(trimmed)}`, { withCredentials: true });
+        const res = await axios.get(`https://ai.cyberhash.me/api/chat/search/${encodeURIComponent(trimmed)}`, { withCredentials: true });
         dispatch(setChats({ chats: res.data.chats || [] }));
         dispatch(setSearchTerm({ searchTerm: trimmed }));
     } catch (error) {
@@ -35,7 +35,7 @@ export const Messagesfetch = (chatId)=> async (dispatch, getState)=>{
     }))
     
     try {
-        const messages = await axios.get(`http://localhost:3000/api/chat/messages/${chatId}`,{withCredentials:true})
+        const messages = await axios.get(`https://ai.cyberhash.me/api/chat/messages/${chatId}`,{withCredentials:true})
         // Only update messages if we're still on the same chat (prevent race conditions)
         const currentChatId = getState().chat.selectedChatId;
         if (currentChatId === chatId) {
@@ -50,7 +50,7 @@ export const Messagesfetch = (chatId)=> async (dispatch, getState)=>{
 
 export const createNewchats = ({tittle}) => async (dispatch) => {
     try {
-        const response = await axios.post(`http://localhost:3000/api/chat`, { tittle:tittle }, { withCredentials: true });
+        const response = await axios.post(`https://ai.cyberhash.me/api/chat`, { tittle:tittle }, { withCredentials: true });
         const newChat = response.data.chat;
         
         dispatch(createNewchat({ tittle: tittle }));
@@ -69,7 +69,7 @@ export const createNewchats = ({tittle}) => async (dispatch) => {
 }
 export const deleteChat = (chatId) => async (dispatch) => {
     try{
-        const response = await axios.delete(`http://localhost:3000/api/chat/${chatId}`, { withCredentials: true });
+        const response = await axios.delete(`https://ai.cyberhash.me/api/chat/${chatId}`, { withCredentials: true });
         dispatch(Chatfetch()); // Fetch updated chat list after deleting a chat
         dispatch(setMessages({ Messages: [] })); // Clear messages if the deleted chat was selected
     }catch(error){  

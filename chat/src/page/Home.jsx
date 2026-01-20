@@ -19,7 +19,7 @@ const Home = () => {
   const userDetails = useSelector((state) => state.user);
   let { selectedChatId, chats, Messages } = useSelector((state) => state.chat);
 
-  const socketInstance = io('http://localhost:3000', {
+  const socketInstance = io('https://ai.cyberhash.me', {
     withCredentials: true,
   });
   const [loading,setLoading ] =useState(true)

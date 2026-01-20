@@ -128,7 +128,7 @@ const handleTextMessage = async (socket, messagepayload) => {
 
   // Get AI response
   // const repsonces = await geminiresponce(history); //p4
-  const repsonces = await AiModelResponse(history)
+  const repsonces = await AiModelResponse(history, messagepayload.whichInput)
 
   // Emit response to user
   try {

@@ -185,17 +185,26 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                         <FiImage size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
                         <span className="text-sm font-medium">Create image</span>
                       </button>
-                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
+                      <button 
+                        onClick={() => {
+                          setWhichInput('research');
+                          setShowUpload(false);
+                        }}
+                        className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left"
+                      >
                         <FiSearch size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
                         <span className="text-sm font-medium">Deep research</span>
                       </button>
-                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
-                        <FiShoppingCart size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
-                        <span className="text-sm font-medium">Shopping research</span>
-                      </button>
-                      <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
+                     
+                      <button 
+                        onClick={() => {
+                          setWhichInput('code');
+                          setShowUpload(false);
+                        }}
+                        className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left"
+                      >
                         <HiLightBulb size={18} className="text-gray-400 group-hover:text-white flex-shrink-0" />
-                        <span className="text-sm font-medium">Thinking</span>
+                        <span className="text-sm font-medium">Coding agent</span>
                       </button>
                       <div className="border-t border-white/10 my-1"></div>
                       <button className="flex items-center gap-3 w-full p-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/8 transition-all duration-200 group text-left">
@@ -215,6 +224,20 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                 </div>
               )}
 
+              {whichInput === 'research' && (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
+                  <FiSearch size={12} className="text-green-400" />
+                  <span className="text-xs font-medium text-green-300">Deep Research</span>
+                </div>
+              )}
+
+              {whichInput === 'code' && (
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border border-orange-500/30">
+                  <HiLightBulb size={12} className="text-orange-400" />
+                  <span className="text-xs font-medium text-orange-300">Coding Agent</span>
+                </div>
+              )}
+
               {/* File Preview Indicator */}
               {whichInput === 'file' && selectedFile && (
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
@@ -225,6 +248,7 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                   </button>
                 </div>
               )}
+              
             </div>
 
             {/* Main Input Area */}
@@ -236,7 +260,13 @@ const ChatInput = ({ input, setInput, onSend, loading, onKeyPress, whichInput, s
                 onKeyDown={handleKeyDown}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                placeholder={whichInput === 'image' ? "Describe the image you want to create..." : whichInput === 'file' ? "Add a message about this file (optional)..." : "Message cyber-ai..."}
+                placeholder={
+                  whichInput === 'image' ? "Describe the image you want to create..." : 
+                  whichInput === 'file' ? "Add a message about this file (optional)..." : 
+                  whichInput === 'research' ? "What do you want to research?" :
+                  whichInput === 'code' ? "Ask the coding agent anything..." :
+                  "Message cyber-ai..."
+                }
                 className="w-full resize-none bg-transparent text-gray-100 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 py-2 px-1 text-[15px] leading-6 max-h-[200px] custom-scrollbar"
                 rows={1}
                 disabled={loading}
