@@ -31,14 +31,14 @@ const socketserver = (httpserver) => {
     //  console.log("✅ User connected",socket.user);// Line remove rs
 
     socket.on("ai-message", async (messagepayload) => {
-      console.log("Received ai-message:", messagepayload);
+      // console.log("Received ai-message:", messagepayload);
       if(messagepayload.content?.length>5000){
          return socket.emit("ai-repsonces", {
           content: "Message too long, please limit to 5000 characters.",
           chat: messagepayload.chat,
         })
       }
-      console.log("Processing ai-message with whichInput:", messagepayload.whichInput);
+      // console.log("Processing ai-message with whichInput:", messagepayload.whichInput);
       
       if(messagepayload.whichInput==='image'){
         await handleImageMessage(socket, messagepayload);

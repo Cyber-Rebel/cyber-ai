@@ -4,7 +4,7 @@ import { setUser, clearUser } from '../Slicees/userSlice.jsx'
 
 export const loginUser = (data) => async (dispatch) => {
   try {
-  const response = await axios.post(`https://ai.cyberhash.me/api/auth/login`, data,{withCredentials:true})
+    const response = await axios.post(`https://ai.cyberhash.me/api/auth/login`, data, { withCredentials: true })
     // console.log("the line 7n",response.data.user)
     const userData = response.data.user
     dispatch(setUser({
@@ -12,20 +12,20 @@ export const loginUser = (data) => async (dispatch) => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
-      avatarimage:userData.avatarsUrl,
+      avatarimage: userData.avatarsUrl,
     }),
-  )
-  return response.data.user // Return user data for further use
+    )
+    return response.data.user // Return user data for further use
   } catch (error) {
     console.error('Login failed:', error)
-     return  { error: true, message:error };
-  
+    return { error: true, message: error.response?.data?.message || error.message };
+
   }
 }
 
-export const registerUser = (data)=> async (dispatch)=>{
-  try{
-  const reponser= await axios.post(`https://ai.cyberhash.me/api/auth/register`,data,{withCredentials:true})
+export const registerUser = (data) => async (dispatch) => {
+  try {
+    const reponser = await axios.post(`https://ai.cyberhash.me/api/auth/register`, data, { withCredentials: true })
     // console.log("the line 34",reponser.data)
     const userData = reponser.data.user
     dispatch(setUser({
@@ -33,48 +33,48 @@ export const registerUser = (data)=> async (dispatch)=>{
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
-      avatarimage:userData.avatarsUrl,
+      avatarimage: userData.avatarsUrl,
     }))
-  return reponser.data.user // Return user data for further use
+    return reponser.data.user // Return user data for further use
 
 
-    
-  }catch(err){
-    return { error: true, message:  err };
-  
+
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || err.message };
+
 
   }
 
 }
-export const  authenticateUser = () => async (dispatch) => {
-  try{
-  const response = await axios.get(`https://ai.cyberhash.me/api/auth/me`,{withCredentials:true})
+export const authenticateUser = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`https://ai.cyberhash.me/api/auth/me`, { withCredentials: true })
     const userData = response.data.user
     dispatch(setUser({
       id: userData.id,
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
-      avatarimage:userData.avatarsUrl,
+      avatarimage: userData.avatarsUrl,
     }))
     return response.data.user // Return user data for further use
- 
 
-  }catch(err){
-    console.log("The erro IN api /me",err)
-    return { error: true, message:err};
+
+  } catch (err) {
+    console.log("The erro IN api /me", err)
+    return { error: true, message: err };
   }
 }
 
 
 export const logoutUser = () => async (dispatch) => {
-  try{
-    const response = await axios.get(`https://ai.cyberhash.me/api/auth/logout`, {withCredentials:true})
+  try {
+    const response = await axios.get(`https://ai.cyberhash.me/api/auth/logout`, { withCredentials: true })
     dispatch(clearUser())
     return response.data.message // Return user data for further use
-  }catch(err){    
-    console.log("The erro IN api /me",err)
-    return { error: true, message:err };
+  } catch (err) {
+    console.log("The erro IN api /me", err)
+    return { error: true, message: err };
   }
 }
 

@@ -7,16 +7,16 @@ import { authenticateUser } from './store/actions/useraction.jsx'
 const App = () => {
   const dispacth = useDispatch()
 
-  useEffect(()=>{
-dispacth(authenticateUser())
-        
-    },[])
+  useEffect(() => {
+    dispacth(authenticateUser())
+
+  }, [])
 
   return (
     <>
-   
-   <Mainrouter/>
-   </>
+
+      <Mainrouter />
+    </>
   )
 }
 

@@ -52,7 +52,7 @@ if(UserAlerdyexits){
 
 const hashpassword  = await bcrypt.hash(password,10)
 
-const  avatarsUrl = `https://avatar.iran.liara.run/public/${gender==='male'?'boy':'girl'}?username=${firstName}`
+const  avatarsUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(firstName + ' ' + lastName)}&background=${gender==='male'?'6366f1':'ec4899'}&color=fff&size=128`
   const user = await UserModels.create({
     email:email,
     password:hashpassword,

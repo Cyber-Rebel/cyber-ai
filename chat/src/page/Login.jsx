@@ -12,35 +12,35 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
 
     const loadingToast = toast.loading('Signing in...')
 
-    try{
-      const iscorrectrepo= await  dispatch(loginUser({ 
+    try {
+      const iscorrectrepo = await dispatch(loginUser({
         email: email,
         password: password
-      })) 
-      
-      if(iscorrectrepo.error){
-        toast.error('Invalid email or password', { id: loadingToast })
-        return 
+      }))
+
+      if (iscorrectrepo.error) {
+        toast.error(iscorrectrepo.message || 'Invalid email or password', { id: loadingToast })
+        return
       }
       toast.success('Login successful!', { id: loadingToast })
       navigate('/')
-    }catch(err){
+    } catch (err) {
       toast.error('Login failed. Please try again.', { id: loadingToast })
     } finally {
       setLoading(false)
     }
   }
-  
+
   return (
     <div className="min-h-screen bg-[#212121] text-white flex items-center justify-center px-4 py-8">
-      <Toaster 
+      <Toaster
         position="top-center"
         toastOptions={{
           style: {
@@ -119,11 +119,10 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-200 ${
-                loading
+              className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-200 ${loading
                   ? 'bg-white/10 cursor-not-allowed'
                   : 'bg-white/10 hover:bg-white/20 border border-white/20 transform hover:-translate-y-0.5'
-              } focus:outline-none focus:ring-2 focus:ring-white/20`}
+                } focus:outline-none focus:ring-2 focus:ring-white/20`}
             >
               {loading ? (
                 <div className="flex items-center justify-center">

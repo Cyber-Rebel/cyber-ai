@@ -18,25 +18,25 @@ const RegisterSimple = () => {
 
   const onSubmit = async (data) => {
     const datas = {
-      fullName:{
-        firstName:data?.firstName,
-        lastName:data?.lastName
+      fullName: {
+        firstName: data?.firstName,
+        lastName: data?.lastName
       },
-      email:data?.email,
-      password:data?.password,
-      gender:data?.gender
+      email: data?.email,
+      password: data?.password,
+      gender: data?.gender
     }
-    
+
     const loadingToast = toast.loading('Creating your account...')
 
     try {
       const iscorrectrepo = await dispacth(registerUser(datas))
 
-      if(iscorrectrepo.error){
-        toast.error('Registration failed. Please check your details.', { id: loadingToast })
-        return 
+      if (iscorrectrepo.error) {
+        toast.error(iscorrectrepo.message || 'Registration failed. Please check your details.', { id: loadingToast })
+        return
       }
-      
+
       toast.success('Account created successfully!', { id: loadingToast })
       reset()
       navigate('/')
@@ -47,7 +47,7 @@ const RegisterSimple = () => {
 
   return (
     <div className="min-h-screen bg-[#212121] text-white flex items-center justify-center px-4 py-8">
-      <Toaster 
+      <Toaster
         position="top-center"
         toastOptions={{
           style: {
@@ -93,9 +93,8 @@ const RegisterSimple = () => {
                     required: 'First name is required',
                     minLength: { value: 2, message: 'First name must be at least 2 characters' }
                   })}
-                  className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${
-                    errors.firstName ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
-                  }`}
+                  className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${errors.firstName ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
+                    }`}
                   placeholder="John"
                 />
                 {errors.firstName && (
@@ -115,9 +114,8 @@ const RegisterSimple = () => {
                     required: 'Last name is required',
                     minLength: { value: 2, message: 'Last name must be at least 2 characters' }
                   })}
-                  className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${
-                    errors.lastName ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
-                  }`}
+                  className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${errors.lastName ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
+                    }`}
                   placeholder="Doe"
                 />
                 {errors.lastName && (
@@ -141,9 +139,8 @@ const RegisterSimple = () => {
                     message: 'Invalid email address'
                   }
                 })}
-                className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${
-                  errors.email ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
-                }`}
+                className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${errors.email ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
+                  }`}
                 placeholder="john@example.com"
               />
               {errors.email && (
@@ -163,9 +160,8 @@ const RegisterSimple = () => {
                   required: 'Password is required',
                   minLength: { value: 6, message: 'Password must be at least 6 characters' }
                 })}
-                className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${
-                  errors.password ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
-                }`}
+                className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white placeholder-gray-500 ${errors.password ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
+                  }`}
                 placeholder="Enter your password"
               />
               {errors.password && (
@@ -181,9 +177,8 @@ const RegisterSimple = () => {
               <select
                 id="gender"
                 {...register('gender', { required: 'Please select your gender' })}
-                className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white ${
-                  errors.gender ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
-                }`}
+                className={`w-full px-4 py-3 bg-[#212121] border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 text-white ${errors.gender ? 'border-red-500/50 bg-red-500/5' : 'border-[#2d2d2d] hover:border-[#404040]'
+                  }`}
               >
                 <option value="" className="bg-[#212121]">Select Gender</option>
                 <option value="male" className="bg-[#212121]">Male</option>
@@ -198,11 +193,10 @@ const RegisterSimple = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-200 ${
-                isSubmitting
+              className={`w-full py-3 px-4 rounded-xl font-medium text-white transition-all duration-200 ${isSubmitting
                   ? 'bg-white/10 cursor-not-allowed'
                   : 'bg-white/10 hover:bg-white/20 border border-white/20 transform hover:-translate-y-0.5'
-              } focus:outline-none focus:ring-2 focus:ring-white/20`}
+                } focus:outline-none focus:ring-2 focus:ring-white/20`}
             >
               {isSubmitting ? (
                 <div className="flex items-center justify-center">
