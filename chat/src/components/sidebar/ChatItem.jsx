@@ -3,13 +3,19 @@ import { RiMessage3Line } from "react-icons/ri";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 
 const ChatItem = ({ chat, selectedChatId, onChatSelect, onDelete, truncateTitle }) => {
+  const handleClick = () => {
+    if (chat && chat._id) {
+      onChatSelect(chat);
+    }
+  };
+
   return (
     <div
-      key={chat._id}
-      onClick={() => onChatSelect(chat)}
+      key={chat?._id || 'unknown'}
+      onClick={handleClick}
       className={`
         group relative cursor-pointer p-3 rounded-lg transition-all duration-200
-        ${selectedChatId === chat._id 
+        ${selectedChatId === chat?._id 
           ? 'bg-[#2d2d2d] text-white' 
           : 'text-gray-300 hover:bg-[#2d2d2d]'
         }
@@ -20,7 +26,7 @@ const ChatItem = ({ chat, selectedChatId, onChatSelect, onDelete, truncateTitle 
           <div className="flex items-center gap-3">
             <RiMessage3Line size={16} className="flex-shrink-0" />
             <span className="text-sm font-medium truncate">
-              {truncateTitle(chat.tittle || chat.title)}
+              {truncateTitle(chat?.tittle || chat?.title)}
             </span>
           </div>
         </div>
@@ -28,7 +34,7 @@ const ChatItem = ({ chat, selectedChatId, onChatSelect, onDelete, truncateTitle 
         {/* Action Buttons */}
         <div className="flex items-center transition-opacity duration-200">
           {/* Show delete button only when this chat is selected */}
-          {selectedChatId === chat._id && (
+          {selectedChatId === chat?._id && (
             <button
               onClick={(e) => {
                 e.stopPropagation();

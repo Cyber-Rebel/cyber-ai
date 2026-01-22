@@ -93,6 +93,7 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) =
             onClick={() => {
               toast.dismiss(t.id);
               confirmDelete();
+              navigate('/chat');
             }}
             className="flex-1 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-sm rounded-lg transition-colors"
           >
@@ -114,7 +115,6 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) =
         border: '1px solid #404040',
       }
     });
-    navigate('/chat');
 
   };
 
@@ -131,6 +131,12 @@ const ChatSlider = ({ chats, selectedChatId, desktop, userDetails, navigate }) =
   };
 
   const handleChatSelect = (data) => {
+    // Validate chat data before navigating
+    if (!data || !data._id) {
+      console.error('Invalid chat data:', data);
+      toast.error('Unable to open chat. Invalid chat data.');
+      return;
+    }
     // Just navigate - Home component's useEffect will handle message fetching
     navigate(`/chat/${data._id}`);
   };
